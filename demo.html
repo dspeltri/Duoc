@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP Demo · Duo C Logística</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:Inter,sans-serif;
+  background:#f4f6f8;
+  margin:0;
+}
+
+header{
+  background:#007585;
+  color:white;
+  padding:14px 24px;
+  font-weight:700;
+}
+
+.tabs{
+  display:flex;
+  background:white;
+  border-bottom:1px solid #ddd;
+}
+
+.tab{
+  padding:12px 20px;
+  cursor:pointer;
+}
+
+.tab.active{
+  background:#007585;
+  color:white;
+}
+
+.container{
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:16px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  margin-bottom:16px;
+}
+
+input{
+  width:100%;
+  padding:6px;
+  margin-top:4px;
+  margin-bottom:10px;
+}
+
+button{
+  padding:8px 12px;
+  margin-right:8px;
+  background:#007585;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>ERP Demo · Duo C Logística</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('cadastro')">Cadastro</div>
+  <div class="tab" onclick="showTab('faturamento')">Faturamento</div>
+  <div class="tab" onclick="showTab('pagar')">Contas a Pagar</div>
+  <div class="tab" onclick="showTab('receber')">Contas a Receber</div>
+  <div class="tab" onclick="showTab('frota')">Gestão de Frota</div>
+</div>
+
+<div class="container">
+
+<!-- CADASTRO -->
+<div id="cadastro" class="tabcontent">
+  <div class="card">
+    <h3>Cadastro de Cliente</h3>
+
+    <label>Número do Cliente</label>
+    <input>
+
+    <label>Razão Social</label>
+    <input>
+
+    <label>Nome Fantasia</label>
+    <input>
+
+    <label>Endereço</label>
+    <input placeholder="Rua">
+    <input placeholder="Cidade">
+    <input placeholder="Estado">
+    <input placeholder="País">
+
+    <label>CNPJ</label>
+    <input>
+
+    <label>E-mail</label>
+    <input>
+
+    <label>Telefone</label>
+    <input>
+
+    <label>Contato</label>
+    <input>
+
+    <label>Telefone Alternativo</label>
+    <input>
+
+    <label>E-mail Alternativo</label>
+    <input>
+
+    <button>Novo</button>
+    <button>Editar</button>
+    <button>Excluir</button>
+  </div>
+</div>
+
+<!-- FATURAMENTO -->
+<div id="faturamento" class="tabcontent" style="display:none">
+  <div class="card">
+    <h3>Faturamento</h3>
+
+    <label>Número da Nota Fiscal</label>
+    <input>
+
+    <label>Cliente</label>
+    <input>
+
+    <label>Produto</label>
+    <input>
+
+    <label>Quantidade</label>
+    <input>
+
+    <label>Valor Unitário</label>
+    <input>
+
+    <label>Valor Total</label>
+    <input>
+
+    <label>PIS</label>
+    <input>
+
+    <label>COFINS</label>
+    <input>
+
+    <label>ICMS</label>
+    <input>
+
+    <label>Desconto (%)</label>
+    <input>
+
+    <button>Nova Fatura</button>
+    <button>Editar</button>
+    <button>Excluir</button>
+  </div>
+</div>
+
+<!-- CONTAS A PAGAR -->
+<div id="pagar" class="tabcontent" style="display:none">
+  <div class="card">
+    <h3>Contas a Pagar</h3>
+
+    <label>Fornecedor</label>
+    <input>
+
+    <label>Valor</label>
+    <input>
+
+    <label>Dados Bancários</label>
+    <input>
+
+    <label>Data de Vencimento</label>
+    <input type="date">
+
+    <label>Anexos (Nota Fiscal)</label>
+    <input type="file">
+  </div>
+</div>
+
+<!-- CONTAS A RECEBER -->
+<div id="receber" class="tabcontent" style="display:none">
+  <div class="card">
+    <h3>Contas a Receber</h3>
+
+    <label>Cliente</label>
+    <input>
+
+    <label>Valor</label>
+    <input>
+
+    <label>Dados Bancários</label>
+    <input>
+
+    <label>Data de Vencimento</label>
+    <input type="date">
+
+    <label>Anexos</label>
+    <input type="file">
+  </div>
+</div>
+
+<!-- FROTA -->
+<div id="frota" class="tabcontent" style="display:none">
+  <div class="card">
+    <h3>Gestão de Frota</h3>
+
+    <label>Placa</label>
+    <input>
+
+    <label>Modelo do Veículo</label>
+    <input>
+
+    <label>Dados do Seguro</label>
+    <input>
+
+    <label>Tipo de Frota</label>
+    <input>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showTab(tab) {
+  document.querySelectorAll('.tabcontent').forEach(el => el.style.display='none');
+  document.getElementById(tab).style.display='block';
+}
+</script>
+
+</body>
+</html>
