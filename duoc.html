@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duo C Logística · ERP Backoffice</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:#0a1628;
+  --navy-alt:#262836;
+  --teal:#007585;
+  --teal-hover:#006575;
+  --teal-light:#29b0c3;
+  --on-dark-60:rgba(255,255,255,0.60);
+  --on-dark-50:rgba(255,255,255,0.50);
+  --on-dark-40:rgba(255,255,255,0.40);
+  --on-dark-20:rgba(255,255,255,0.20);
+  --on-dark-10:rgba(255,255,255,0.10);
+  --on-dark-05:rgba(255,255,255,0.05);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--navy);
+  color:white;
+  line-height:1.6;
+}
+
+.container{max-width:1200px;margin:auto;padding:0 24px}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--navy);
+  border-bottom:1px solid var(--on-dark-10);
+}
+.nav-inner{
+  display:flex;justify-content:space-between;align-items:center;
+  height:56px;
+}
+.brand{
+  color:var(--teal-light);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.05em;
+}
+.nav-links a{
+  color:var(--on-dark-60);
+  margin-left:16px;
+  font-size:13px;
+  text-decoration:none;
+}
+.nav-links a:hover{color:white}
+
+/* HERO */
+.hero{
+  padding:80px 0;
+  background:linear-gradient(135deg,var(--navy),#0d2233,#1a1c2e);
+  position:relative;
+}
+.hero h1{
+  font-size:36px;
+  font-weight:800;
+  letter-spacing:-0.03em;
+  margin-bottom:16px;
+}
+.hero p{
+  max-width:600px;
+  color:var(--on-dark-60);
+}
+.hero ul{
+  margin-top:16px;
+  color:var(--on-dark-60);
+}
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  margin-right:10px;
+  padding:12px 22px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+}
+.btn-primary{
+  background:var(--teal);
+  color:white;
+}
+.btn-primary:hover{background:var(--teal-hover)}
+.btn-secondary{
+  border:1px solid var(--on-dark-20);
+  color:white;
+}
+
+/* SECTION */
+section{padding:80px 0}
+h2{
+  font-size:28px;
+  font-weight:700;
+}
+.rule{
+  width:48px;height:4px;background:var(--teal);
+  border-radius:2px;margin:12px 0 24px;
+}
+.sub{color:var(--on-dark-50);font-size:13px}
+
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.card{
+  background:var(--on-dark-05);
+  border:1px solid var(--on-dark-10);
+  padding:20px;
+  border-radius:16px;
+}
+.card h3{
+  font-size:15px;
+  margin-bottom:6px;
+}
+.card p, .card ul{
+  font-size:13px;
+  color:var(--on-dark-60);
+}
+
+/* STATUS */
+.banner{
+  background:rgba(0,85,168,0.2);
+  border:1px solid rgba(0,85,168,0.3);
+  padding:16px;
+  border-radius:12px;
+  margin-top:20px;
+  font-size:13px;
+}
+
+/* WORKFLOW */
+.wf{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  overflow:hidden;
+  border-radius:16px;
+}
+.step{
+  padding:20px;
+  background:var(--teal);
+}
+.step:nth-child(2){background:var(--teal-light)}
+.step:nth-child(3){background:var(--navy-alt)}
+.step h3{font-size:14px;margin-bottom:8px}
+
+/* TOGGLE */
+.toggle{margin-top:10px;color:var(--teal-light);cursor:pointer;font-size:13px}
+.hidden{display:none}
+
+/* CTA */
+.cta{
+  background:var(--on-dark-05);
+  padding:24px;
+  border-radius:16px;
+  border:1px solid var(--on-dark-10);
+}
+
+@media(max-width:768px){
+  h1{font-size:28px}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="brand">Duo C Logística · ERP Backoffice</div>
+    <div class="nav-links">
+      <a href="#overview">Visão geral</a>
+      <a href="#why">Por que agora</a>
+      <a href="#changes">O que muda</a>
+      <a href="#fit">Aderência</a>
+      <a href="#impl">Implementação</a>
+      <a href="#decisions">Decisões</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="overview">
+  <div class="container">
+    <h1>ERP Backoffice para Duo C Logística</h1>
+    <p>A Duo C atua em um mercado logístico em crescimento no norte do Brasil. Para escalar operações, é necessário consolidar processos, finanças e dados em um único sistema de backoffice.</p>
+
+    <a class="btn btn-primary" onclick="go('changes')">Ver impacto nas operações</a>
+    <a class="btn btn-secondary" onclick="go('impl')">Ver plano de implementação</a>
+
+    <ul>
+      <li>Uma única fonte de verdade para pedidos, rotas e faturamento</li>
+      <li>Fechamento financeiro mais rápido e menos erros manuais</li>
+      <li>Escala sustentável no norte do Brasil</li>
+    </ul>
+  </div>
+</section>
+
+<section class="container" id="why">
+  <h2>Duo C Hoje: Crescimento com Atrito Operacional</h2>
+  <div class="rule"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Operações & Visibilidade</h3>
+      <ul>
+        <li>Múltiplas planilhas e sistemas</li>
+        <li>Baixa visibilidade de margem por rota (TBC)</li>
+        <li>Dificuldade em acompanhar SLAs (Premissa)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Financeiro & Faturamento</h3>
+      <ul>
+        <li>Processos manuais de faturamento</li>
+        <li>Reconciliação trabalhosa</li>
+        <li>Risco de atrasos (TBC)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Dados & Decisão</h3>
+      <ul>
+        <li>Dados fragmentados</li>
+        <li>Sem dashboards consolidados</li>
+        <li>Relatórios lentos</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="banner">
+    <strong>Se nada for feito:</strong>
+    <ul>
+      <li>Erros aumentam com o crescimento</li>
+      <li>Limitação para escalar operações</li>
+      <li>Baixo controle de custos e margens</li>
+    </ul>
+  </div>
+</section>
+
+<section class="container" id="changes">
+  <h2>O que o ERP muda para a Duo C</h2>
+  <div class="rule"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Controle Operacional</h3>
+      <p>Gestão centralizada de pedidos, rotas e execução (TBC)</p>
+    </div>
+    <div class="card">
+      <h3>Base Financeira</h3>
+      <p>Faturamento e recebíveis integrados</p>
+    </div>
+    <div class="card">
+      <h3>Dados & Compliance</h3>
+      <p>Dados centralizados e auditáveis</p>
+    </div>
+  </div>
+
+  <ul class="sub">
+    <li>Melhor visibilidade de margem (TBC)</li>
+    <li>Fechamento financeiro mais rápido (TBC)</li>
+    <li>Redução de erros operacionais e financeiros</li>
+  </ul>
+</section>
+
+<section class="container" id="fit">
+  <h2>Como o ERP se adapta ao modelo da Duo C</h2>
+  <div class="rule"></div>
+
+  <div class="grid">
+    <div class="card"><h3>Clientes & Contratos</h3><p>Gestão centralizada de contratos</p></div>
+    <div class="card"><h3>Pedidos & Rotas</h3><p>Planejamento e gestão logística</p></div>
+    <div class="card"><h3>Execução</h3><p>Acompanhamento de entregas (TBC)</p></div>
+    <div class="card"><h3>Faturamento</h3><p>Faturamento automatizado</p></div>
+    <div class="card"><h3>Relatórios</h3><p>Dashboards operacionais e financeiros</p></div>
+  </div>
+
+  <div class="toggle" onclick="toggle('fitmore')">Ver mais detalhes</div>
+  <div id="fitmore" class="hidden sub">
+    <p>Suporte a rotas longas e desafios logísticos do norte do Brasil.</p>
+  </div>
+</section>
+
+<section class="container" id="impl">
+  <h2>Implementação: Faseada e de Baixo Risco</h2>
+  <div class="rule"></div>
+
+  <div class="wf">
+    <div class="step"><h3>1. Diagnóstico</h3><p>Mapeamento de processos (TBC)</p></div>
+    <div class="step"><h3>2. Piloto</h3><p>Teste em rotas/clientes selecionados</p></div>
+    <div class="step"><h3>3. Escala</h3><p>Expansão para toda operação</p></div>
+  </div>
+
+  <div class="grid" style="margin-top:20px">
+    <div class="card">
+      <h3>O que precisamos</h3>
+      <ul>
+        <li>Sponsor executivo</li>
+        <li>Responsáveis de processo</li>
+        <li>Acesso a dados</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>O que você recebe</h3>
+      <ul>
+        <li>Plano estruturado</li>
+        <li>Treinamento (TBC)</li>
+        <li>Suporte contínuo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="toggle" onclick="toggle('implmore')">Ver mais detalhes</div>
+  <div id="implmore" class="hidden sub">
+    <p>Integrações via API ou arquivos CSV (TBC).</p>
+  </div>
+</section>
+
+<section class="container">
+  <h2>Valor para a Duo C</h2>
+  <div class="rule"></div>
+
+  <div class="grid">
+    <div class="card"><h3>Eficiência</h3><p>Redução de tarefas manuais (TBC)</p></div>
+    <div class="card"><h3>Controle Financeiro</h3><p>Visibilidade de custos e margens</p></div>
+    <div class="card"><h3>Escalabilidade</h3><p>Suporte ao crescimento</p></div>
+    <div class="card"><h3>Governança</h3><p>Dados confiáveis e auditáveis</p></div>
+  </div>
+</section>
+
+<section class="container" id="decisions">
+  <h2>Decisões & Próximos Passos</h2>
+  <div class="rule"></div>
+
+  <div class="cta">
+    <ul>
+      <li>Confirmar necessidade do ERP</li>
+      <li>Definir sponsor e equipe</li>
+      <li>Aprovar fase de diagnóstico (TBC)</li>
+      <li>Definir escopo do piloto (TBC)</li>
+      <li>Alinhar orçamento e cronograma</li>
+    </ul>
+
+    <a class="btn btn-primary">Aprovar fase de diagnóstico</a>
+    <a class="btn btn-secondary">Agendar workshop</a>
+  </div>
+</section>
+
+<script>
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+function toggle(id){
+  document.getElementById(id).classList.toggle('hidden');
+}
+</script>
+
+</body>
+</html>
