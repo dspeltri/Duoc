@@ -2,241 +2,256 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERP Demo · Duo C Logística</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<title>DUOC Logistica ERP</title>
 
 <style>
-body{
-  font-family:Inter,sans-serif;
-  background:#f4f6f8;
-  margin:0;
-}
+body{margin:0;font-family:system-ui;background:#f6f7f9;}
+header{padding:20px;text-align:center;font-weight:bold;font-size:20px;background:white;}
+.wrapper{display:grid;grid-template-columns:220px 1fr;}
 
-header{
-  background:#007585;
-  color:white;
-  padding:14px 24px;
-  font-weight:700;
-}
+/* MENU */
+.sidebar{padding:20px;}
+.nav{padding:10px;cursor:pointer;border-radius:8px;margin-bottom:6px;}
+.nav:hover{background:#eee;}
 
-.tabs{
-  display:flex;
-  background:white;
-  border-bottom:1px solid #ddd;
-}
+/* CONTENT */
+.content{padding:30px;}
 
-.tab{
-  padding:12px 20px;
-  cursor:pointer;
-}
+/* CARD */
+.card{background:white;padding:20px;border-radius:12px;margin-bottom:20px;}
 
-.tab.active{
-  background:#007585;
-  color:white;
-}
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 
-.container{
-  padding:20px;
-}
+input,select{padding:8px;width:100%;}
 
-.card{
-  background:white;
-  padding:16px;
-  border-radius:8px;
-  border:1px solid #ddd;
-  margin-bottom:16px;
-}
+/* TABLE */
+table{width:100%;margin-top:10px;border-collapse:collapse;}
+td,th{padding:8px;border-bottom:1px solid #ddd;}
+td[contenteditable]{background:#fafafa;}
 
-input{
-  width:100%;
-  padding:6px;
-  margin-top:4px;
-  margin-bottom:10px;
-}
+/* BUTTON */
+.btn{padding:10px;background:black;color:white;border:none;margin-top:10px;cursor:pointer;}
 
-button{
-  padding:8px 12px;
-  margin-right:8px;
-  background:#007585;
-  color:white;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.4);
+justify-content:center;
+align-items:center;
+}
+.modal-content{
+background:white;
+padding:20px;
+width:500px;
+border-radius:12px;
 }
 </style>
 </head>
 
 <body>
 
-<header>ERP Demo · Duo C Logística</header>
+<header>DUOC Logistica</header>
 
-<div class="tabs">
-  <div class="tab active" onclick="showTab('cadastro')">Cadastro</div>
-  <div class="tab" onclick="showTab('faturamento')">Faturamento</div>
-  <div class="tab" onclick="showTab('pagar')">Contas a Pagar</div>
-  <div class="tab" onclick="showTab('receber')">Contas a Receber</div>
-  <div class="tab" onclick="showTab('frota')">Gestão de Frota</div>
+<div class="wrapper">
+
+<div class="sidebar">
+<div class="nav" onclick="nav('clientes')">Clientes</div>
+<div class="nav" onclick="nav('fornecedores')">Fornecedores</div>
+<div class="nav" onclick="nav('faturamento')">Faturamento</div>
+<div class="nav" onclick="nav('frota')">Frota</div>
 </div>
 
-<div class="container">
+<div class="content">
 
-<!-- CADASTRO -->
-<div id="cadastro" class="tabcontent">
-  <div class="card">
-    <h3>Cadastro de Cliente</h3>
+<!-- CLIENTES -->
+<div id="clientes">
+<div class="card">
+<h3>Clientes</h3>
+<button class="btn" onclick="openModal()">Adicionar Cliente</button>
 
-    <label>Número do Cliente</label>
-    <input>
+<table id="tblClientes">
+<tr><th>ID</th><th>Razão</th><th>CNPJ</th></tr>
+<tr><td>1</td><td>Amazon</td><td>11.111.111</td></tr>
+<tr><td>2</td><td>Magalu</td><td>22.222.222</td></tr>
+<tr><td>3</td><td>Mercado Livre</td><td>33.333.333</td></tr>
+</table>
+</div>
+</div>
 
-    <label>Razão Social</label>
-    <input>
+<!-- MODAL CLIENTE -->
+<div class="modal" id="modalCliente">
+<div class="modal-content">
 
-    <label>Nome Fantasia</label>
-    <input>
+<h3>Novo Cliente</h3>
 
-    <label>Endereço</label>
-    <input placeholder="Rua">
-    <input placeholder="Cidade">
-    <input placeholder="Estado">
-    <input placeholder="País">
+<div class="grid">
+<input id="cRazao" placeholder="Razão social">
+<input id="cFantasia" placeholder="Nome fantasia">
+<input id="cCnpj" placeholder="CNPJ">
+<input id="cEmail" placeholder="Email">
+<input id="cTel" placeholder="Telefone">
+<input id="cContato" placeholder="Contato">
+<input id="cRua" placeholder="Rua">
+<input id="cCidade" placeholder="Cidade">
+<input id="cEstado" placeholder="Estado">
+<input id="cPais" placeholder="País">
+</div>
 
-    <label>CNPJ</label>
-    <input>
+<button class="btn" onclick="addCliente()">Salvar</button>
+<button class="btn" onclick="closeModal()">Fechar</button>
 
-    <label>E-mail</label>
-    <input>
+</div>
+</div>
 
-    <label>Telefone</label>
-    <input>
+<!-- FORNECEDORES -->
+<div id="fornecedores" style="display:none">
+<div class="card">
+<h3>Fornecedores</h3>
 
-    <label>Contato</label>
-    <input>
+<div class="grid">
+<input id="fNome" placeholder="Nome">
+<input id="fCnpj" placeholder="CNPJ">
+<input id="fEmail" placeholder="Email">
+<input id="fEndereco" placeholder="Endereço">
+<input id="fContato" placeholder="Contato">
+</div>
 
-    <label>Telefone Alternativo</label>
-    <input>
+<button class="btn" onclick="addFornecedor()">Adicionar</button>
 
-    <label>E-mail Alternativo</label>
-    <input>
-
-    <button>Novo</button>
-    <button>Editar</button>
-    <button>Excluir</button>
-  </div>
+<table id="tblFornecedores">
+<tr><th>Nome</th><th>CNPJ</th></tr>
+<tr><td>DHL</td><td>44.444</td></tr>
+<tr><td>Fedex</td><td>55.555</td></tr>
+</table>
+</div>
 </div>
 
 <!-- FATURAMENTO -->
-<div id="faturamento" class="tabcontent" style="display:none">
-  <div class="card">
-    <h3>Faturamento</h3>
+<div id="faturamento" style="display:none">
 
-    <label>Número da Nota Fiscal</label>
-    <input>
+<div class="card">
+<h3>Faturamento</h3>
 
-    <label>Cliente</label>
-    <input>
+<select id="cliente">
+<option>Amazon</option>
+<option>Magalu</option>
+</select>
 
-    <label>Produto</label>
-    <input>
+<div id="linhas"></div>
 
-    <label>Quantidade</label>
-    <input>
+<button class="btn" onclick="addLinha()">Adicionar Produto</button>
 
-    <label>Valor Unitário</label>
-    <input>
-
-    <label>Valor Total</label>
-    <input>
-
-    <label>PIS</label>
-    <input>
-
-    <label>COFINS</label>
-    <input>
-
-    <label>ICMS</label>
-    <input>
-
-    <label>Desconto (%)</label>
-    <input>
-
-    <button>Nova Fatura</button>
-    <button>Editar</button>
-    <button>Excluir</button>
-  </div>
+<p>Total: <strong id="total">0</strong></p>
 </div>
 
-<!-- CONTAS A PAGAR -->
-<div id="pagar" class="tabcontent" style="display:none">
-  <div class="card">
-    <h3>Contas a Pagar</h3>
+<table id="tblFaturas">
+<tr><th>Cliente</th><th>Total</th></tr>
+<tr><td>Amazon</td><td>1500</td></tr>
+</table>
 
-    <label>Fornecedor</label>
-    <input>
-
-    <label>Valor</label>
-    <input>
-
-    <label>Dados Bancários</label>
-    <input>
-
-    <label>Data de Vencimento</label>
-    <input type="date">
-
-    <label>Anexos (Nota Fiscal)</label>
-    <input type="file">
-  </div>
-</div>
-
-<!-- CONTAS A RECEBER -->
-<div id="receber" class="tabcontent" style="display:none">
-  <div class="card">
-    <h3>Contas a Receber</h3>
-
-    <label>Cliente</label>
-    <input>
-
-    <label>Valor</label>
-    <input>
-
-    <label>Dados Bancários</label>
-    <input>
-
-    <label>Data de Vencimento</label>
-    <input type="date">
-
-    <label>Anexos</label>
-    <input type="file">
-  </div>
 </div>
 
 <!-- FROTA -->
-<div id="frota" class="tabcontent" style="display:none">
-  <div class="card">
-    <h3>Gestão de Frota</h3>
+<div id="frota" style="display:none">
+<div class="card">
 
-    <label>Placa</label>
-    <input>
+<h3>Frota</h3>
 
-    <label>Modelo do Veículo</label>
-    <input>
-
-    <label>Dados do Seguro</label>
-    <input>
-
-    <label>Tipo de Frota</label>
-    <input>
-  </div>
+<div class="grid">
+<input id="placa" placeholder="Placa">
+<input id="modelo" placeholder="Modelo">
+<input id="seguro" placeholder="Dados do seguro">
 </div>
 
+<button class="btn" onclick="addFrota()">Adicionar</button>
+
+<table id="tblFrota">
+<tr><th>Placa</th><th>Modelo</th><th>Seguro</th></tr>
+<tr><td>ABC123</td><td>Volvo</td><td>Bradesco</td></tr>
+<tr><td>XYZ999</td><td>Scania</td><td>Porto Seguro</td></tr>
+</table>
+
+</div>
+</div>
+
+</div>
 </div>
 
 <script>
-function showTab(tab) {
-  document.querySelectorAll('.tabcontent').forEach(el => el.style.display='none');
-  document.getElementById(tab).style.display='block';
+
+/* NAV */
+function nav(id){
+document.querySelectorAll(".content > div").forEach(p=>p.style.display="none");
+document.getElementById(id).style.display="block";
 }
+
+/* MODAL */
+function openModal(){modalCliente.style.display="flex";}
+function closeModal(){modalCliente.style.display="none";}
+
+/* CLIENTE */
+function addCliente(){
+tblClientes.innerHTML += `
+<tr>
+<td>-</td>
+<td>${cRazao.value}</td>
+<td>${cCnpj.value}</td>
+</tr>`;
+closeModal();
+}
+
+/* FORNECEDOR */
+function addFornecedor(){
+tblFornecedores.innerHTML+=`
+<tr><td>${fNome.value}</td><td>${fCnpj.value}</td></tr>`;
+}
+
+/* FATURA LINHAS */
+function addLinha(){
+let div=document.createElement("div");
+div.className="grid";
+div.innerHTML=`
+<input placeholder="Produto">
+<input placeholder="Qtd" oninput="calc()">
+<input placeholder="Valor" oninput="calc()">
+<input placeholder="Desconto %" oninput="calc()">
+`;
+linhas.appendChild(div);
+}
+
+/* CALCULO */
+function calc(){
+let total=0;
+document.querySelectorAll("#linhas .grid").forEach(g=>{
+let q=g.children[1].value||0;
+let v=g.children[2].value||0;
+let d=g.children[3].value||0;
+
+let base=q*v;
+let desc=base*(d/100);
+let liquido=base-desc;
+
+// impostos
+let final=liquido+(liquido*0.0065)+(liquido*0.03)+(liquido*0.18);
+
+total+=final;
+});
+total.textContent=total.toFixed(2);
+}
+
+/* FROTA */
+function addFrota(){
+tblFrota.innerHTML+=`
+<tr>
+<td>${placa.value}</td>
+<td>${modelo.value}</td>
+<td>${seguro.value}</td>
+</tr>`;
+}
+
 </script>
 
 </body>
