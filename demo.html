@@ -1,258 +1,1122 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>DUOC Logistica ERP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DUOC Logística ERP — Enterprise Excellence</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ====== FOUNDATION & RESET ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<style>
-body{margin:0;font-family:system-ui;background:#f6f7f9;}
-header{padding:20px;text-align:center;font-weight:bold;font-size:20px;background:white;}
-.wrapper{display:grid;grid-template-columns:220px 1fr;}
+    :root {
+      --primary: #050505;
+      --surface-light: #0f0f0f;
+      --surface-mid: #1a1a1a;
+      --surface-dark: #0a0a0a;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border-light: rgba(255, 255, 255, 0.08);
+      --border-mid: rgba(255, 255, 255, 0.12);
+      --transition-ease: cubic-bezier(0.32, 0.72, 0, 1);
+      --transition-spring: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
 
-/* MENU */
-.sidebar{padding:20px;}
-.nav{padding:10px;cursor:pointer;border-radius:8px;margin-bottom:6px;}
-.nav:hover{background:#eee;}
+    body {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--surface-dark) 100%);
+      color: var(--text-primary);
+      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100dvh;
+    }
 
-/* CONTENT */
-.content{padding:30px;}
+    /* Noise overlay texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
 
-/* CARD */
-.card{background:white;padding:20px;border-radius:12px;margin-bottom:20px;}
+    /* ====== HEADER / NAV ====== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: rgba(5, 5, 5, 0.7);
+      border-bottom: 1px solid var(--border-light);
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: slideDown 600ms var(--transition-ease) 1;
+    }
 
-/* GRID */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-input,select{padding:8px;width:100%;}
+    .header-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-/* TABLE */
-table{width:100%;margin-top:10px;border-collapse:collapse;}
-td,th{padding:8px;border-bottom:1px solid #ddd;}
-td[contenteditable]{background:#fafafa;}
+    .header-meta {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
 
-/* BUTTON */
-.btn{padding:10px;background:black;color:white;border:none;margin-top:10px;cursor:pointer;}
+    .header-badge {
+      display: inline-block;
+      padding: 0.375rem 0.875rem;
+      background: var(--accent-glow);
+      border: 1px solid var(--accent);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
 
-/* MODAL */
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.4);
-justify-content:center;
-align-items:center;
-}
-.modal-content{
-background:white;
-padding:20px;
-width:500px;
-border-radius:12px;
-}
-</style>
+    /* Mobile Menu Button */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      margin: 5px 0;
+      transition: all 300ms var(--transition-ease);
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(10px, 10px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* ====== LAYOUT WRAPPER ====== */
+    .wrapper {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1920px;
+      margin: 0 auto;
+    }
+
+    /* ====== SIDEBAR / NAVIGATION ====== */
+    .sidebar {
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+      padding: 2rem;
+      background: var(--surface-light);
+      border: 1px solid var(--border-light);
+      border-radius: 2rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+      animation: fadeInLeft 700ms var(--transition-ease) 150ms both;
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .sidebar-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .nav {
+      position: relative;
+      padding: 0.875rem 1.25rem;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      border-radius: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 300ms var(--transition-ease);
+      overflow: hidden;
+    }
+
+    .nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(16, 185, 129, 0.15);
+      opacity: 0;
+      transition: opacity 300ms var(--transition-ease);
+    }
+
+    .nav:hover {
+      color: var(--accent);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .nav.active {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    /* ====== MAIN CONTENT ====== */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Page containers */
+    .page {
+      display: none;
+      animation: fadeInUp 600ms var(--transition-ease);
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px) blur(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) blur(0);
+      }
+    }
+
+    /* ====== CARDS (DOUBLE-BEZEL ARCHITECTURE) ====== */
+    .card {
+      /* Outer shell */
+      padding: 1.5px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-light);
+      border-radius: 2rem;
+      box-shadow: 0 0 1px rgba(255, 255, 255, 0.05);
+      animation: fadeInUp 700ms var(--transition-ease) 100ms both;
+    }
+
+    .card-inner {
+      /* Inner core */
+      padding: 2.5rem;
+      background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-mid) 100%);
+      border-radius: calc(2rem - 0.375rem);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1.5rem;
+    }
+
+    .card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 0.375rem 0.875rem;
+      background: var(--accent-glow);
+      border: 1px solid var(--accent);
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ====== GRID SYSTEM ====== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .grid.col-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid.col-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* ====== FORM INPUTS ====== */
+    input, select, textarea {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-mid);
+      border-radius: 1rem;
+      color: var(--text-primary);
+      font-family: 'Geist', system-ui, sans-serif;
+      font-size: 0.95rem;
+      transition: all 300ms var(--transition-ease);
+      outline: none;
+    }
+
+    input::placeholder, select::placeholder, textarea::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    }
+
+    /* ====== BUTTONS (BUTTON-IN-BUTTON ARCHITECTURE) ====== */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1.5rem;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 300ms var(--transition-ease);
+      overflow: hidden;
+      min-height: 44px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 300ms var(--transition-ease);
+    }
+
+    .btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 50%;
+      transition: all 300ms var(--transition-ease);
+    }
+
+    .btn:hover .btn-icon {
+      transform: translateX(2px) scale(1.05);
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-mid);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ====== TABLE STYLING ====== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 2px solid var(--border-mid);
+    }
+
+    th {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      transition: all 200ms var(--transition-ease);
+    }
+
+    tbody tr:hover {
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    td[contenteditable] {
+      background: rgba(16, 185, 129, 0.08);
+      border-radius: 0.5rem;
+      cursor: text;
+    }
+
+    /* ====== MODAL ====== */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+      animation: fadeIn 300ms var(--transition-ease);
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      /* Outer shell */
+      padding: 2px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-light);
+      border-radius: 2rem;
+      width: 90%;
+      max-width: 600px;
+      animation: zoomIn 400ms var(--transition-spring);
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) blur(4px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) blur(0);
+      }
+    }
+
+    /* Inner core */
+    .modal-inner {
+      padding: 3rem;
+      background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-mid) 100%);
+      border-radius: calc(2rem - 0.375rem);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .modal-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: flex-end;
+    }
+
+    /* ====== SECTION SPACING ====== */
+    section {
+      padding: 3rem 0;
+    }
+
+    /* ====== RESPONSIVENESS ====== */
+    @media (max-width: 1024px) {
+      .wrapper {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1.5rem;
+      }
+
+      .sidebar-label {
+        grid-column: 1 / -1;
+      }
+
+      .grid.col-3, .grid.col-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 1.25rem;
+      }
+
+      .header-title {
+        font-size: 1.35rem;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .header-meta {
+        gap: 1rem;
+      }
+
+      .header-badge {
+        display: none;
+      }
+
+      .wrapper {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 0;
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 1rem;
+        margin: 1rem;
+        border-radius: 1.5rem;
+      }
+
+      .sidebar-label {
+        grid-column: 1 / -1;
+        padding: 0 0.5rem;
+      }
+
+      .nav {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .content {
+        padding: 0 1rem 2rem 1rem;
+        gap: 1.5rem;
+      }
+
+      .card-inner {
+        padding: 1.75rem;
+      }
+
+      .grid, .grid.col-3, .grid.col-4 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .modal-content {
+        width: 95%;
+      }
+
+      .modal-inner {
+        padding: 2rem;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-actions {
+        flex-direction: column-reverse;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+      }
+
+      .card-title {
+        font-size: 1.35rem;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 0.75rem 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+
+      header {
+        padding: 0.875rem 1rem;
+      }
+
+      .header-title {
+        font-size: 1.15rem;
+      }
+
+      .sidebar {
+        margin: 0.75rem;
+        padding: 0.75rem;
+        border-radius: 1.25rem;
+      }
+
+      .content {
+        padding: 0 0.75rem 1.5rem 0.75rem;
+      }
+
+      .card-inner {
+        padding: 1.25rem;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+        min-height: 40px;
+      }
+
+      .eyebrow {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.7rem;
+      }
+
+      table {
+        font-size: 0.8rem;
+      }
+
+      th, td {
+        padding: 0.6rem 0.5rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- HEADER -->
+  <header>
+    <h1 class="header-title">DUOC Logística</h1>
+    <div class="header-meta">
+      <span class="header-badge">Premium ERP</span>
+      <button class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
 
-<header>DUOC Logistica</header>
+  <!-- MAIN LAYOUT -->
+  <div class="wrapper">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <label class="sidebar-label">Módulos</label>
+      <div class="nav active" onclick="showPage('clientes')">📊 Clientes</div>
+      <div class="nav" onclick="showPage('fornecedores')">🏭 Fornecedores</div>
+      <div class="nav" onclick="showPage('faturamento')">💰 Faturamento</div>
+      <div class="nav" onclick="showPage('frota')">🚚 Frota</div>
+    </aside>
 
-<div class="wrapper">
+    <!-- CONTENT -->
+    <main class="content">
+      <!-- CLIENTES PAGE -->
+      <div id="clientes" class="page active">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div>
+                <span class="eyebrow">Gestão</span>
+                <h2 class="card-title">Clientes</h2>
+              </div>
+              <button class="btn" onclick="openModal('cliente')">
+                <span>+ Novo Cliente</span>
+                <span class="btn-icon">→</span>
+              </button>
+            </div>
 
-<div class="sidebar">
-<div class="nav" onclick="nav('clientes')">Clientes</div>
-<div class="nav" onclick="nav('fornecedores')">Fornecedores</div>
-<div class="nav" onclick="nav('faturamento')">Faturamento</div>
-<div class="nav" onclick="nav('frota')">Frota</div>
-</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Razão Social</th>
+                  <th>CNPJ</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody id="tblClientes">
+                <tr>
+                  <td>1</td>
+                  <td>Amazon Brasil</td>
+                  <td>11.111.111/0001-00</td>
+                  <td>contato@amazon.br</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Magalu Marketplace</td>
+                  <td>22.222.222/0001-00</td>
+                  <td>admin@magalu.com.br</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Mercado Livre</td>
+                  <td>33.333.333/0001-00</td>
+                  <td>suporte@mercadolivre.com.br</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-<div class="content">
+      <!-- FORNECEDORES PAGE -->
+      <div id="fornecedores" class="page">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div>
+                <span class="eyebrow">Parceiros</span>
+                <h2 class="card-title">Fornecedores</h2>
+              </div>
+            </div>
 
-<!-- CLIENTES -->
-<div id="clientes">
-<div class="card">
-<h3>Clientes</h3>
-<button class="btn" onclick="openModal()">Adicionar Cliente</button>
+            <div class="grid">
+              <input id="fNome" placeholder="Nome do fornecedor" />
+              <input id="fCnpj" placeholder="CNPJ" />
+              <input id="fEmail" placeholder="Email corporativo" />
+              <input id="fEndereco" placeholder="Endereço" />
+            </div>
 
-<table id="tblClientes">
-<tr><th>ID</th><th>Razão</th><th>CNPJ</th></tr>
-<tr><td>1</td><td>Amazon</td><td>11.111.111</td></tr>
-<tr><td>2</td><td>Magalu</td><td>22.222.222</td></tr>
-<tr><td>3</td><td>Mercado Livre</td><td>33.333.333</td></tr>
-</table>
-</div>
-</div>
+            <button class="btn" onclick="addFornecedor()">
+              <span>Adicionar Fornecedor</span>
+              <span class="btn-icon">+</span>
+            </button>
 
-<!-- MODAL CLIENTE -->
-<div class="modal" id="modalCliente">
-<div class="modal-content">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>CNPJ</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody id="tblFornecedores">
+                <tr>
+                  <td>DHL Express</td>
+                  <td>44.444.444/0001-00</td>
+                  <td>br-business@dhl.com</td>
+                </tr>
+                <tr>
+                  <td>FedEx Brasil</td>
+                  <td>55.555.555/0001-00</td>
+                  <td>enterprise@fedex.com.br</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-<h3>Novo Cliente</h3>
+      <!-- FATURAMENTO PAGE -->
+      <div id="faturamento" class="page">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div>
+                <span class="eyebrow">Financeiro</span>
+                <h2 class="card-title">Faturamento</h2>
+              </div>
+            </div>
 
-<div class="grid">
-<input id="cRazao" placeholder="Razão social">
-<input id="cFantasia" placeholder="Nome fantasia">
-<input id="cCnpj" placeholder="CNPJ">
-<input id="cEmail" placeholder="Email">
-<input id="cTel" placeholder="Telefone">
-<input id="cContato" placeholder="Contato">
-<input id="cRua" placeholder="Rua">
-<input id="cCidade" placeholder="Cidade">
-<input id="cEstado" placeholder="Estado">
-<input id="cPais" placeholder="País">
-</div>
+            <div class="grid">
+              <select id="cliente">
+                <option value="Amazon Brasil">Amazon Brasil</option>
+                <option value="Magalu">Magalu Marketplace</option>
+                <option value="Mercado Livre">Mercado Livre</option>
+              </select>
+            </div>
 
-<button class="btn" onclick="addCliente()">Salvar</button>
-<button class="btn" onclick="closeModal()">Fechar</button>
+            <div id="linhas"></div>
 
-</div>
-</div>
+            <button class="btn" onclick="addLinha()">
+              <span>+ Adicionar Produto</span>
+              <span class="btn-icon">+</span>
+            </button>
 
-<!-- FORNECEDORES -->
-<div id="fornecedores" style="display:none">
-<div class="card">
-<h3>Fornecedores</h3>
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+              <p style="font-size: 1.1rem; color: var(--text-secondary);">
+                Total: <strong style="color: var(--accent); font-size: 1.5rem;" id="total">R$ 0,00</strong>
+              </p>
+            </div>
 
-<div class="grid">
-<input id="fNome" placeholder="Nome">
-<input id="fCnpj" placeholder="CNPJ">
-<input id="fEmail" placeholder="Email">
-<input id="fEndereco" placeholder="Endereço">
-<input id="fContato" placeholder="Contato">
-</div>
+            <table style="margin-top: 2.5rem;">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Total</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody id="tblFaturas">
+                <tr>
+                  <td>Amazon Brasil</td>
+                  <td>R$ 1.500,00</td>
+                  <td>2025-06-02</td>
+                </tr>
+                <tr>
+                  <td>Magalu Marketplace</td>
+                  <td>R$ 2.300,50</td>
+                  <td>2025-06-01</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-<button class="btn" onclick="addFornecedor()">Adicionar</button>
+      <!-- FROTA PAGE -->
+      <div id="frota" class="page">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div>
+                <span class="eyebrow">Transporte</span>
+                <h2 class="card-title">Gestão de Frota</h2>
+              </div>
+            </div>
 
-<table id="tblFornecedores">
-<tr><th>Nome</th><th>CNPJ</th></tr>
-<tr><td>DHL</td><td>44.444</td></tr>
-<tr><td>Fedex</td><td>55.555</td></tr>
-</table>
-</div>
-</div>
+            <div class="grid col-3">
+              <input id="placa" placeholder="Placa (ex: ABC-1234)" />
+              <input id="modelo" placeholder="Modelo (ex: Volvo FH)" />
+              <input id="seguro" placeholder="Dados do seguro" />
+            </div>
 
-<!-- FATURAMENTO -->
-<div id="faturamento" style="display:none">
+            <button class="btn" onclick="addFrota()">
+              <span>Registrar Veículo</span>
+              <span class="btn-icon">+</span>
+            </button>
 
-<div class="card">
-<h3>Faturamento</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Placa</th>
+                  <th>Modelo</th>
+                  <th>Seguradora</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="tblFrota">
+                <tr>
+                  <td><strong>ABC-1234</strong></td>
+                  <td>Volvo FH</td>
+                  <td>Bradesco Seguros</td>
+                  <td><span style="color: var(--accent);">✓ Ativo</span></td>
+                </tr>
+                <tr>
+                  <td><strong>XYZ-9999</strong></td>
+                  <td>Scania R450</td>
+                  <td>Porto Seguro</td>
+                  <td><span style="color: var(--accent);">✓ Ativo</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 
-<select id="cliente">
-<option>Amazon</option>
-<option>Magalu</option>
-</select>
+  <!-- MODAL: NOVO CLIENTE -->
+  <div class="modal" id="modalCliente">
+    <div class="modal-content">
+      <div class="modal-inner">
+        <h3 class="modal-title">✨ Novo Cliente</h3>
 
-<div id="linhas"></div>
+        <div class="grid col-3">
+          <input id="cRazao" placeholder="Razão social" />
+          <input id="cFantasia" placeholder="Nome fantasia" />
+          <input id="cCnpj" placeholder="CNPJ" />
+        </div>
 
-<button class="btn" onclick="addLinha()">Adicionar Produto</button>
+        <div class="grid col-3">
+          <input id="cEmail" placeholder="Email corporativo" />
+          <input id="cTel" placeholder="Telefone" />
+          <input id="cContato" placeholder="Nome do contato" />
+        </div>
 
-<p>Total: <strong id="total">0</strong></p>
-</div>
+        <div class="grid">
+          <input id="cRua" placeholder="Rua" />
+          <input id="cCidade" placeholder="Cidade" />
+          <input id="cEstado" placeholder="Estado" />
+          <input id="cPais" placeholder="País" />
+        </div>
 
-<table id="tblFaturas">
-<tr><th>Cliente</th><th>Total</th></tr>
-<tr><td>Amazon</td><td>1500</td></tr>
-</table>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+          <button class="btn" onclick="addCliente()">
+            <span>Salvar Cliente</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-</div>
+  <script>
+    /* ====== NAVIGATION ====== */
+    function showPage(id) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
+      
+      // Show selected page
+      document.getElementById(id).classList.add('active');
+      event.target.closest('.nav').classList.add('active');
 
-<!-- FROTA -->
-<div id="frota" style="display:none">
-<div class="card">
+      // Close mobile menu if open
+      const toggle = document.querySelector('.menu-toggle');
+      if (toggle.classList.contains('active')) {
+        toggleMenu();
+      }
+    }
 
-<h3>Frota</h3>
+    function toggleMenu() {
+      document.querySelector('.menu-toggle').classList.toggle('active');
+    }
 
-<div class="grid">
-<input id="placa" placeholder="Placa">
-<input id="modelo" placeholder="Modelo">
-<input id="seguro" placeholder="Dados do seguro">
-</div>
+    /* ====== MODAL MANAGEMENT ====== */
+    function openModal(type) {
+      const modal = document.getElementById(`modal${type.charAt(0).toUpperCase() + type.slice(1)}`);
+      if (modal) {
+        modal.classList.add('active');
+      }
+    }
 
-<button class="btn" onclick="addFrota()">Adicionar</button>
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+    }
 
-<table id="tblFrota">
-<tr><th>Placa</th><th>Modelo</th><th>Seguro</th></tr>
-<tr><td>ABC123</td><td>Volvo</td><td>Bradesco</td></tr>
-<tr><td>XYZ999</td><td>Scania</td><td>Porto Seguro</td></tr>
-</table>
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        closeModal();
+      }
+    });
 
-</div>
-</div>
+    /* ====== CLIENTS ====== */
+    function addCliente() {
+      if (!cRazao.value.trim()) {
+        alert('Por favor, insira a razão social');
+        return;
+      }
 
-</div>
-</div>
+      const row = `
+        <tr style="animation: fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1);">
+          <td>${Math.floor(Math.random() * 10000)}</td>
+          <td>${cRazao.value}</td>
+          <td>${cCnpj.value || '—'}</td>
+          <td>${cEmail.value || '—'}</td>
+        </tr>
+      `;
+      document.getElementById('tblClientes').innerHTML += row;
+      
+      // Clear form
+      ['cRazao', 'cFantasia', 'cCnpj', 'cEmail', 'cTel', 'cContato', 'cRua', 'cCidade', 'cEstado', 'cPais'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
 
-<script>
+      closeModal();
+    }
 
-/* NAV */
-function nav(id){
-document.querySelectorAll(".content > div").forEach(p=>p.style.display="none");
-document.getElementById(id).style.display="block";
-}
+    /* ====== SUPPLIERS ====== */
+    function addFornecedor() {
+      if (!fNome.value.trim()) {
+        alert('Por favor, insira o nome do fornecedor');
+        return;
+      }
 
-/* MODAL */
-function openModal(){modalCliente.style.display="flex";}
-function closeModal(){modalCliente.style.display="none";}
+      const row = `
+        <tr style="animation: fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1);">
+          <td>${fNome.value}</td>
+          <td>${fCnpj.value || '—'}</td>
+          <td>${fEmail.value || '—'}</td>
+        </tr>
+      `;
+      document.getElementById('tblFornecedores').innerHTML += row;
+      
+      fNome.value = '';
+      fCnpj.value = '';
+      fEmail.value = '';
+      fEndereco.value = '';
+    }
 
-/* CLIENTE */
-function addCliente(){
-tblClientes.innerHTML += `
-<tr>
-<td>-</td>
-<td>${cRazao.value}</td>
-<td>${cCnpj.value}</td>
-</tr>`;
-closeModal();
-}
+    /* ====== BILLING LINES ====== */
+    function addLinha() {
+      const div = document.createElement('div');
+      div.className = 'grid col-4';
+      div.style.animation = 'fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1)';
+      div.innerHTML = `
+        <input placeholder="Produto" class="linha-produto" />
+        <input placeholder="Qtd" class="linha-qtd" type="number" oninput="calcTotal()" />
+        <input placeholder="Valor Unit." class="linha-valor" type="number" oninput="calcTotal()" />
+        <input placeholder="Desconto %" class="linha-desconto" type="number" oninput="calcTotal()" />
+      `;
+      document.getElementById('linhas').appendChild(div);
+    }
 
-/* FORNECEDOR */
-function addFornecedor(){
-tblFornecedores.innerHTML+=`
-<tr><td>${fNome.value}</td><td>${fCnpj.value}</td></tr>`;
-}
+    function calcTotal() {
+      let total = 0;
+      const linhas = document.querySelectorAll('#linhas .grid');
+      
+      linhas.forEach(linha => {
+        const qtd = parseFloat(linha.querySelector('.linha-qtd').value) || 0;
+        const valor = parseFloat(linha.querySelector('.linha-valor').value) || 0;
+        const desconto = parseFloat(linha.querySelector('.linha-desconto').value) || 0;
 
-/* FATURA LINHAS */
-function addLinha(){
-let div=document.createElement("div");
-div.className="grid";
-div.innerHTML=`
-<input placeholder="Produto">
-<input placeholder="Qtd" oninput="calc()">
-<input placeholder="Valor" oninput="calc()">
-<input placeholder="Desconto %" oninput="calc()">
-`;
-linhas.appendChild(div);
-}
+        const base = qtd * valor;
+        const descAbs = base * (desconto / 100);
+        const liquido = base - descAbs;
 
-/* CALCULO */
-function calc(){
-let total=0;
-document.querySelectorAll("#linhas .grid").forEach(g=>{
-let q=g.children[1].value||0;
-let v=g.children[2].value||0;
-let d=g.children[3].value||0;
+        // Impostos: PIS (0.65%) + COFINS (3%) + ICMS (18%)
+        const impostos = liquido * (0.0065 + 0.03 + 0.18);
+        const final = liquido + impostos;
 
-let base=q*v;
-let desc=base*(d/100);
-let liquido=base-desc;
+        total += final;
+      });
 
-// impostos
-let final=liquido+(liquido*0.0065)+(liquido*0.03)+(liquido*0.18);
+      document.getElementById('total').textContent = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
 
-total+=final;
-});
-total.textContent=total.toFixed(2);
-}
+    /* ====== FLEET ====== */
+    function addFrota() {
+      if (!placa.value.trim()) {
+        alert('Por favor, insira a placa');
+        return;
+      }
 
-/* FROTA */
-function addFrota(){
-tblFrota.innerHTML+=`
-<tr>
-<td>${placa.value}</td>
-<td>${modelo.value}</td>
-<td>${seguro.value}</td>
-</tr>`;
-}
-
-</script>
-
+      const row = `
+        <tr style="animation: fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1);">
+          <td><strong>${placa.value.toUpperCase()}</strong></td>
+          <td>${modelo.value}</td>
+          <td>${seguro.value || '—'}</td>
+          <td><span style="color: var(--accent);">✓ Ativo</span></td>
+        </tr>
+      `;
+      document.getElementById('tblFrota').innerHTML += row;
+      
+      placa.value = '';
+      modelo.value = '';
+      seguro.value = '';
+    }
+  </script>
 </body>
 </html>
