@@ -20,13 +20,15 @@
   --on-dark-20:rgba(255,255,255,0.20);
   --on-dark-10:rgba(255,255,255,0.10);
   --on-dark-05:rgba(255,255,255,0.05);
+  --on-light-60:rgba(10,22,40,0.60);
+  --on-light-50:rgba(10,22,40,0.50);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Inter',sans-serif;
   background:var(--white);
-  color:white;
+  color:var(--navy);
   line-height:1.6;
 }
 
@@ -35,7 +37,7 @@ body{
 /* NAV */
 nav{
   position:sticky;top:0;z-index:100;
-  background:var(--white);
+  background:white;
   border-bottom:1px solid var(--on-dark-10);
 }
 .nav-inner{
@@ -43,18 +45,18 @@ nav{
   height:56px;
 }
 .brand{
-  color:var(--teal-light);
+  color:var(--teal);
   font-weight:700;
   font-size:13px;
   letter-spacing:0.05em;
 }
 .nav-links a{
-  color:var(--on-dark-60);
+  color:var(--on-light-60);
   margin-left:16px;
   font-size:13px;
   text-decoration:none;
 }
-.nav-links a:hover{color:white}
+.nav-links a:hover{color:var(--navy)}
 
 /* HERO */
 .hero{
@@ -67,14 +69,15 @@ nav{
   font-weight:800;
   letter-spacing:-0.03em;
   margin-bottom:16px;
+  color:var(--navy);
 }
 .hero p{
   max-width:600px;
-  color:var(--on-dark-60);
+  color:var(--on-light-60);
 }
 .hero ul{
   margin-top:16px;
-  color:var(--on-dark-60);
+  color:var(--on-light-60);
 }
 .btn{
   display:inline-block;
@@ -92,8 +95,8 @@ nav{
 }
 .btn-primary:hover{background:var(--teal-hover)}
 .btn-secondary{
-  border:1px solid var(--on-dark-20);
-  color:white;
+  border:1px solid var(--on-light-60);
+  color:var(--navy);
 }
 
 /* SECTION */
@@ -101,12 +104,13 @@ section{padding:80px 0}
 h2{
   font-size:28px;
   font-weight:700;
+  color:var(--navy);
 }
 .rule{
   width:48px;height:4px;background:var(--teal);
   border-radius:2px;margin:12px 0 24px;
 }
-.sub{color:var(--on-dark-50);font-size:13px}
+.sub{color:var(--on-light-60);font-size:13px}
 
 /* CARDS */
 .grid{
@@ -115,18 +119,19 @@ h2{
   gap:16px;
 }
 .card{
-  background:#ffffff;;
-  border:1px solid var(--on-dark-10);
+  background:#ffffff;
+  border:1px solid #e0e0e0;
   padding:20px;
   border-radius:16px;
 }
 .card h3{
   font-size:15px;
   margin-bottom:6px;
+  color:var(--navy);
 }
 .card p, .card ul{
   font-size:13px;
-  color:var(--on-dark-60);
+  color:var(--on-light-60);
 }
 
 /* STATUS */
@@ -137,6 +142,7 @@ h2{
   border-radius:12px;
   margin-top:20px;
   font-size:13px;
+  color:var(--navy);
 }
 
 /* WORKFLOW */
@@ -149,21 +155,23 @@ h2{
 .step{
   padding:20px;
   background:var(--teal);
+  color:white;
 }
-.step:nth-child(2){background:var(--teal-light)}
-.step:nth-child(3){background:var(--navy-alt)}
+.step:nth-child(2){background:var(--teal-light);color:white}
+.step:nth-child(3){background:var(--navy-alt);color:white}
 .step h3{font-size:14px;margin-bottom:8px}
 
 /* TOGGLE */
-.toggle{margin-top:10px;color:var(--teal-light);cursor:pointer;font-size:13px}
+.toggle{margin-top:10px;color:var(--teal);cursor:pointer;font-size:13px;font-weight:600}
 .hidden{display:none}
 
 /* CTA */
 .cta{
-  background:var(--on-dark-05);
+  background:#f5f5f5;
   padding:24px;
   border-radius:16px;
-  border:1px solid var(--on-dark-10);
+  border:1px solid #e0e0e0;
+  color:var(--navy);
 }
 
 @media(max-width:768px){
@@ -191,7 +199,7 @@ h2{
 <section class="hero" id="overview">
   <div class="container">
     <h1>ERP Backoffice para Duo C Logística</h1>
-    <p>A Duo C atua em um mercado logístico em crescimento no norte do Brasil. Para escalar operações, é necessário consolidar processos, finanças e dados em um único sistema de backoffice.</p>
+    <p>A Duo C atua em um mercado logístico em crescimento no norte do Brasil. Para escalar operações, é necessário consolidar processos, finanças e dados em um único sistema de backoffice.</p>[...]
 
     <a class="btn btn-primary" onclick="go('changes')">Ver impacto nas operações</a>
     <a class="btn btn-secondary" onclick="go('impl')">Ver plano de implementação</a>
