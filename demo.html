@@ -4,53 +4,81 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DUOC Logística ERP — Enterprise Excellence</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
-  
+
+  <!-- Inter / JetBrains Mono from style guide -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <style>
     /* ====== FOUNDATION & RESET ====== */
-    * {
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     :root {
-      --primary: #050505;
-      --surface-light: #0f0f0f;
-      --surface-mid: #1a1a1a;
-      --surface-dark: #0a0a0a;
-      --accent: #10b981;
-      --accent-glow: rgba(16, 185, 129, 0.1);
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-tertiary: rgba(255, 255, 255, 0.5);
-      --border-light: rgba(255, 255, 255, 0.08);
-      --border-mid: rgba(255, 255, 255, 0.12);
-      --transition-ease: cubic-bezier(0.32, 0.72, 0, 1);
-      --transition-spring: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      /* Brand */
+      --navy:         #0a1628;
+      --navy-alt:     #262836;
+      --teal:         #007585;
+      --teal-hover:   #006575;
+      --teal-light:   #29b0c3;
+      --teal-bg:      #eef6f7;
+      --teal-mid:     #e5eff0;
+      --teal-border:  #cddbde;
+
+      /* Greys */
+      --gray-01: #46535e;
+      --gray-02: #5d6d78;
+      --gray-03: #82939a;
+      --gray-04: #acc0c4;
+      --gray-05: #cddbde;
+      --gray-06: #e5eff0;
+      --gray-07: #eef6f7;
+      --gray-08: #f9fcfc;
+
+      /* Semantic */
+      --success:     #12a88a;
+
+      /* Typography */
+      --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Spacing */
+      --sp-1:  4px;
+      --sp-2:  8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 20px;
+      --sp-6: 24px;
+      --sp-8: 32px;
+      --sp-10: 40px;
+      --sp-12: 48px;
+      --sp-20: 80px;
+
+      /* Radii */
+      --r-sm:   6px;
+      --r-md:   8px;
+      --r-lg:  12px;
+      --r-xl:  16px;
+      --r-2xl: 20px;
+      --r-pill: 999px;
+    }
+
+    html {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      scroll-behavior: smooth;
     }
 
     body {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--surface-dark) 100%);
-      color: var(--text-primary);
-      font-family: 'Geist', system-ui, -apple-system, sans-serif;
-      font-size: 15px;
+      background: #f4f6f8;
+      color: #1a2430;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
       overflow-x: hidden;
-      min-height: 100dvh;
-    }
-
-    /* Noise overlay texture */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: 
-        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 1;
     }
 
     /* ====== HEADER / NAV ====== */
@@ -58,66 +86,61 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      background: rgba(5, 5, 5, 0.7);
-      border-bottom: 1px solid var(--border-light);
-      padding: 1.25rem 2rem;
+      background: white;
+      border-bottom: 1px solid #dde3e8;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: 0 var(--sp-6);
+      height: 56px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      animation: slideDown 600ms var(--transition-ease) 1;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .header-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 22px;
       font-weight: 700;
-      font-size: 1.75rem;
       letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--navy);
     }
 
     .header-meta {
       display: flex;
-      gap: 1.5rem;
+      gap: var(--sp-3);
       align-items: center;
     }
 
     .header-badge {
-      display: inline-block;
-      padding: 0.375rem 0.875rem;
-      background: var(--accent-glow);
-      border: 1px solid var(--accent);
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: rgba(0,117,133,0.12);
+      border: 1px solid rgba(0,117,133,0.3);
+      border-radius: var(--r-pill);
+      font-size: 11px;
+      font-weight: 600;
       letter-spacing: 0.05em;
-      color: var(--accent);
+      color: var(--teal-light);
       text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .header-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal-light);
     }
 
     /* Mobile Menu Button */
     .menu-toggle {
       display: none;
-      background: none;
-      border: none;
+      background: white;
+      border-radius: var(--r-lg);
+      border: 1px solid #dde3e8;
       cursor: pointer;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       padding: 0;
       align-items: center;
       justify-content: center;
@@ -125,15 +148,15 @@
 
     .menu-toggle span {
       display: block;
-      width: 24px;
+      width: 20px;
       height: 2px;
-      background: var(--text-primary);
-      margin: 5px 0;
-      transition: all 300ms var(--transition-ease);
+      background: #1a2430;
+      margin: 3px 0;
+      transition: all 0.2s;
     }
 
     .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(10px, 10px);
+      transform: rotate(45deg) translate(4px, 4px);
     }
 
     .menu-toggle.active span:nth-child(2) {
@@ -141,170 +164,126 @@
     }
 
     .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
+      transform: rotate(-45deg) translate(4px, -4px);
     }
 
     /* ====== LAYOUT WRAPPER ====== */
     .wrapper {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 2rem;
-      padding: 2rem;
-      max-width: 1920px;
+      grid-template-columns: 260px 1fr;
+      gap: var(--sp-6);
+      padding: var(--sp-6);
+      max-width: 1200px;
       margin: 0 auto;
     }
 
     /* ====== SIDEBAR / NAVIGATION ====== */
     .sidebar {
       position: sticky;
-      top: 120px;
+      top: 80px;
       height: fit-content;
-      padding: 2rem;
-      background: var(--surface-light);
-      border: 1px solid var(--border-light);
-      border-radius: 2rem;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
-      animation: fadeInLeft 700ms var(--transition-ease) 150ms both;
-    }
-
-    @keyframes fadeInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+      padding: var(--sp-5);
+      background: white;
+      border: 1px solid #dde3e8;
+      border-radius: var(--r-xl);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
     }
 
     .sidebar-label {
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 0.1em;
-      color: var(--text-tertiary);
+      color: var(--gray-02);
       text-transform: uppercase;
-      margin-bottom: 1.25rem;
+      margin-bottom: var(--sp-2);
       display: block;
     }
 
     .nav {
       position: relative;
-      padding: 0.875rem 1.25rem;
-      margin-bottom: 0.75rem;
+      padding: 10px 12px;
       cursor: pointer;
-      border-radius: 1rem;
+      border-radius: var(--r-md);
       font-weight: 500;
-      color: var(--text-secondary);
-      transition: all 300ms var(--transition-ease);
-      overflow: hidden;
-    }
-
-    .nav::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(16, 185, 129, 0.15);
-      opacity: 0;
-      transition: opacity 300ms var(--transition-ease);
+      font-size: 14px;
+      color: var(--gray-02);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .nav:hover {
-      color: var(--accent);
-      background: rgba(16, 185, 129, 0.08);
+      background: var(--gray-08);
+      border-color: var(--gray-06);
     }
 
     .nav.active {
-      background: var(--accent-glow);
-      color: var(--accent);
-      border: 1px solid var(--accent);
+      background: var(--teal-bg);
+      color: var(--teal);
+      border-color: var(--teal-border);
     }
 
     /* ====== MAIN CONTENT ====== */
     .content {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: var(--sp-5);
     }
 
-    /* Page containers */
     .page {
       display: none;
-      animation: fadeInUp 600ms var(--transition-ease);
     }
 
     .page.active {
       display: block;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px) blur(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) blur(0);
-      }
-    }
-
-    /* ====== CARDS (DOUBLE-BEZEL ARCHITECTURE) ====== */
+    /* ====== CARDS (light) ====== */
     .card {
-      /* Outer shell */
-      padding: 1.5px;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid var(--border-light);
-      border-radius: 2rem;
-      box-shadow: 0 0 1px rgba(255, 255, 255, 0.05);
-      animation: fadeInUp 700ms var(--transition-ease) 100ms both;
-    }
-
-    .card-inner {
-      /* Inner core */
-      padding: 2.5rem;
-      background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-mid) 100%);
-      border-radius: calc(2rem - 0.375rem);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
-      position: relative;
+      background: white;
+      border: 1px solid #dde3e8;
+      border-radius: var(--r-xl);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: var(--sp-6);
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
-      gap: 1.5rem;
+      margin-bottom: var(--sp-4);
+      gap: var(--sp-4);
     }
 
     .card-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.5rem;
+      font-size: 18px;
       font-weight: 700;
       letter-spacing: -0.01em;
+      color: #1a2430;
     }
 
     .eyebrow {
       display: inline-block;
-      padding: 0.375rem 0.875rem;
-      background: var(--accent-glow);
-      border: 1px solid var(--accent);
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      color: var(--teal-light);
+      margin-bottom: 4px;
     }
 
     /* ====== GRID SYSTEM ====== */
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-4);
     }
 
     .grid.col-3 {
@@ -318,60 +297,50 @@
     /* ====== FORM INPUTS ====== */
     input, select, textarea {
       width: 100%;
-      padding: 0.875rem 1.25rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-mid);
-      border-radius: 1rem;
-      color: var(--text-primary);
-      font-family: 'Geist', system-ui, sans-serif;
-      font-size: 0.95rem;
-      transition: all 300ms var(--transition-ease);
+      padding: 8px 12px;
+      background: white;
+      border: 1px solid #dde3e8;
+      border-radius: var(--r-md);
+      color: #1a2430;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
       outline: none;
     }
 
     input::placeholder, select::placeholder, textarea::placeholder {
-      color: var(--text-tertiary);
+      color: var(--gray-03);
     }
 
     input:focus, select:focus, textarea:focus {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+      background: #ffffff;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0,117,133,0.15);
     }
 
-    /* ====== BUTTONS (BUTTON-IN-BUTTON ARCHITECTURE) ====== */
+    /* ====== BUTTONS ====== */
     .btn {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.75rem;
-      padding: 0.875rem 1.5rem;
-      background: var(--accent);
-      color: #000;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--teal);
+      color: #ffffff;
       border: none;
-      border-radius: 50px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      border-radius: var(--r-lg);
+      font-family: var(--font-sans);
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 14px;
       cursor: pointer;
-      transition: all 300ms var(--transition-ease);
-      overflow: hidden;
-      min-height: 44px;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
-      opacity: 0;
-      transition: opacity 300ms var(--transition-ease);
+      transition: all 0.15s;
+      min-height: 40px;
+      white-space: nowrap;
     }
 
     .btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.3);
+      background: var(--teal-hover);
+      box-shadow: 0 4px 16px rgba(0,117,133,0.3);
     }
 
     .btn:active {
@@ -382,67 +351,52 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 0, 0, 0.15);
-      border-radius: 50%;
-      transition: all 300ms var(--transition-ease);
-    }
-
-    .btn:hover .btn-icon {
-      transform: translateX(2px) scale(1.05);
-      background: rgba(0, 0, 0, 0.25);
+      font-size: 14px;
     }
 
     .btn-secondary {
       background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border-mid);
+      color: var(--teal);
+      border: 1px solid var(--teal-border);
+      box-shadow: none;
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--accent);
-      color: var(--accent);
+      background: var(--teal-bg);
     }
 
     /* ====== TABLE STYLING ====== */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1.5rem;
+      margin-top: var(--sp-3);
+      font-size: 13px;
     }
 
     thead {
-      background: rgba(255, 255, 255, 0.03);
-      border-bottom: 2px solid var(--border-mid);
+      background: #edf0f3;
+      border-bottom: 1px solid #dde3e8;
     }
 
     th {
-      padding: 1rem 1.25rem;
+      padding: 10px 12px;
       text-align: left;
       font-weight: 600;
-      font-size: 0.9rem;
-      letter-spacing: 0.05em;
-      color: var(--text-secondary);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--gray-02);
       text-transform: uppercase;
     }
 
     td {
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--border-light);
-      color: var(--text-secondary);
-      transition: all 200ms var(--transition-ease);
+      padding: 10px 12px;
+      border-bottom: 1px solid #e3e7eb;
+      color: var(--gray-02);
+      transition: background-color 0.15s;
     }
 
     tbody tr:hover {
-      background: rgba(16, 185, 129, 0.05);
-    }
-
-    td[contenteditable] {
-      background: rgba(16, 185, 129, 0.08);
-      border-radius: 0.5rem;
-      cursor: text;
+      background: #f8f9fa;
     }
 
     /* ====== MODAL ====== */
@@ -450,84 +404,68 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.45);
       justify-content: center;
       align-items: center;
       z-index: 50;
-      animation: fadeIn 300ms var(--transition-ease);
     }
 
     .modal.active {
       display: flex;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
     .modal-content {
-      /* Outer shell */
-      padding: 2px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-light);
-      border-radius: 2rem;
+      background: white;
+      border: 1px solid #dde3e8;
+      border-radius: var(--r-2xl);
       width: 90%;
       max-width: 600px;
-      animation: zoomIn 400ms var(--transition-spring);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     }
 
-    @keyframes zoomIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95) blur(4px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) blur(0);
-      }
-    }
-
-    /* Inner core */
     .modal-inner {
-      padding: 3rem;
-      background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-mid) 100%);
-      border-radius: calc(2rem - 0.375rem);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+      padding: var(--sp-6);
     }
 
     .modal-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.75rem;
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 2rem;
+      margin-bottom: var(--sp-4);
       letter-spacing: -0.01em;
+      color: #1a2430;
     }
 
     .modal-actions {
       display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
+      gap: var(--sp-3);
+      margin-top: var(--sp-4);
       justify-content: flex-end;
     }
 
-    /* ====== SECTION SPACING ====== */
-    section {
-      padding: 3rem 0;
+    /* TOTAL block */
+    .total-wrapper {
+      margin-top: var(--sp-5);
+      padding-top: var(--sp-4);
+      border-top: 1px solid #dde3e8;
+    }
+
+    .total-wrapper p {
+      font-size: 15px;
+      color: var(--gray-02);
+    }
+
+    .total-wrapper strong {
+      color: var(--teal);
+      font-size: 22px;
+      margin-left: 4px;
     }
 
     /* ====== RESPONSIVENESS ====== */
     @media (max-width: 1024px) {
       .wrapper {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 1.5rem;
+        gap: var(--sp-4);
+        padding: var(--sp-5);
       }
 
       .sidebar {
@@ -535,8 +473,7 @@
         top: auto;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        padding: 1.5rem;
+        gap: var(--sp-3);
       }
 
       .sidebar-label {
@@ -550,11 +487,11 @@
 
     @media (max-width: 768px) {
       header {
-        padding: 1rem 1.25rem;
+        padding: 0 var(--sp-4);
       }
 
       .header-title {
-        font-size: 1.35rem;
+        font-size: 18px;
       }
 
       .menu-toggle {
@@ -562,7 +499,7 @@
       }
 
       .header-meta {
-        gap: 1rem;
+        gap: var(--sp-2);
       }
 
       .header-badge {
@@ -572,55 +509,39 @@
       .wrapper {
         grid-template-columns: 1fr;
         gap: 0;
-        padding: 0;
+        padding: var(--sp-4) var(--sp-3) var(--sp-8);
       }
 
       .sidebar {
-        position: relative;
-        top: auto;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-        padding: 1rem;
-        margin: 1rem;
-        border-radius: 1.5rem;
+        margin-bottom: var(--sp-4);
+        padding: var(--sp-4);
+        border-radius: var(--r-xl);
       }
 
       .sidebar-label {
         grid-column: 1 / -1;
-        padding: 0 0.5rem;
       }
 
       .nav {
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
+        font-size: 13px;
       }
 
       .content {
-        padding: 0 1rem 2rem 1rem;
-        gap: 1.5rem;
+        padding-bottom: var(--sp-6);
+        gap: var(--sp-4);
       }
 
-      .card-inner {
-        padding: 1.75rem;
+      .card {
+        padding: var(--sp-5);
       }
 
       .grid, .grid.col-3, .grid.col-4 {
         grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .modal-content {
-        width: 95%;
+        gap: var(--sp-3);
       }
 
       .modal-inner {
-        padding: 2rem;
-      }
-
-      .modal-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        padding: var(--sp-5);
       }
 
       .modal-actions {
@@ -631,22 +552,12 @@
         width: 100%;
       }
 
-      .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 1.5rem;
-      }
-
-      .card-title {
-        font-size: 1.35rem;
-      }
-
       table {
-        font-size: 0.85rem;
+        font-size: 12px;
       }
 
       th, td {
-        padding: 0.75rem 0.85rem;
+        padding: 8px 8px;
       }
     }
 
@@ -656,48 +567,31 @@
       }
 
       header {
-        padding: 0.875rem 1rem;
-      }
-
-      .header-title {
-        font-size: 1.15rem;
+        padding: 0 var(--sp-3);
       }
 
       .sidebar {
-        margin: 0.75rem;
-        padding: 0.75rem;
-        border-radius: 1.25rem;
+        padding: var(--sp-3);
       }
 
       .content {
-        padding: 0 0.75rem 1.5rem 0.75rem;
+        padding-bottom: var(--sp-5);
       }
 
-      .card-inner {
-        padding: 1.25rem;
+      .card {
+        padding: var(--sp-4);
       }
 
       .card-title {
-        font-size: 1.2rem;
+        font-size: 16px;
       }
 
-      .btn {
-        padding: 0.75rem 1.25rem;
-        font-size: 0.9rem;
-        min-height: 40px;
+      .modal-inner {
+        padding: var(--sp-4);
       }
 
-      .eyebrow {
-        font-size: 0.65rem;
-        padding: 0.3rem 0.7rem;
-      }
-
-      table {
-        font-size: 0.8rem;
-      }
-
-      th, td {
-        padding: 0.6rem 0.5rem;
+      .modal-title {
+        font-size: 18px;
       }
     }
   </style>
@@ -708,7 +602,10 @@
   <header>
     <h1 class="header-title">DUOC Logística</h1>
     <div class="header-meta">
-      <span class="header-badge">Premium ERP</span>
+      <span class="header-badge">
+        <span class="header-badge-dot"></span>
+        Premium ERP
+      </span>
       <button class="menu-toggle" onclick="toggleMenu()">
         <span></span>
         <span></span>
@@ -722,10 +619,10 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <label class="sidebar-label">Módulos</label>
-      <div class="nav active" onclick="showPage('clientes')">📊 Clientes</div>
-      <div class="nav" onclick="showPage('fornecedores')">🏭 Fornecedores</div>
-      <div class="nav" onclick="showPage('faturamento')">💰 Faturamento</div>
-      <div class="nav" onclick="showPage('frota')">🚚 Frota</div>
+      <div class="nav active" onclick="showPage('clientes')">📊 <span>Clientes</span></div>
+      <div class="nav" onclick="showPage('fornecedores')">🏭 <span>Fornecedores</span></div>
+      <div class="nav" onclick="showPage('faturamento')">💰 <span>Faturamento</span></div>
+      <div class="nav" onclick="showPage('frota')">🚚 <span>Frota</span></div>
     </aside>
 
     <!-- CONTENT -->
@@ -733,204 +630,197 @@
       <!-- CLIENTES PAGE -->
       <div id="clientes" class="page active">
         <div class="card">
-          <div class="card-inner">
-            <div class="card-header">
-              <div>
-                <span class="eyebrow">Gestão</span>
-                <h2 class="card-title">Clientes</h2>
-              </div>
-              <button class="btn" onclick="openModal('cliente')">
-                <span>+ Novo Cliente</span>
-                <span class="btn-icon">→</span>
-              </button>
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Gestão</span>
+              <h2 class="card-title">Clientes</h2>
             </div>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Razão Social</th>
-                  <th>CNPJ</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody id="tblClientes">
-                <tr>
-                  <td>1</td>
-                  <td>Amazon Brasil</td>
-                  <td>11.111.111/0001-00</td>
-                  <td>contato@amazon.br</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Magalu Marketplace</td>
-                  <td>22.222.222/0001-00</td>
-                  <td>admin@magalu.com.br</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Mercado Livre</td>
-                  <td>33.333.333/0001-00</td>
-                  <td>suporte@mercadolivre.com.br</td>
-                </tr>
-              </tbody>
-            </table>
+            <button class="btn" onclick="openModal('cliente')">
+              <span>+ Novo Cliente</span>
+              <span class="btn-icon">→</span>
+            </button>
           </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="tblClientes">
+              <tr>
+                <td>1</td>
+                <td>Amazon Brasil</td>
+                <td>11.111.111/0001-00</td>
+                <td>contato@amazon.br</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Magalu Marketplace</td>
+                <td>22.222.222/0001-00</td>
+                <td>admin@magalu.com.br</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Mercado Livre</td>
+                <td>33.333.333/0001-00</td>
+                <td>suporte@mercadolivre.com.br</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
       <!-- FORNECEDORES PAGE -->
       <div id="fornecedores" class="page">
         <div class="card">
-          <div class="card-inner">
-            <div class="card-header">
-              <div>
-                <span class="eyebrow">Parceiros</span>
-                <h2 class="card-title">Fornecedores</h2>
-              </div>
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Parceiros</span>
+              <h2 class="card-title">Fornecedores</h2>
             </div>
-
-            <div class="grid">
-              <input id="fNome" placeholder="Nome do fornecedor" />
-              <input id="fCnpj" placeholder="CNPJ" />
-              <input id="fEmail" placeholder="Email corporativo" />
-              <input id="fEndereco" placeholder="Endereço" />
-            </div>
-
-            <button class="btn" onclick="addFornecedor()">
-              <span>Adicionar Fornecedor</span>
-              <span class="btn-icon">+</span>
-            </button>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>CNPJ</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody id="tblFornecedores">
-                <tr>
-                  <td>DHL Express</td>
-                  <td>44.444.444/0001-00</td>
-                  <td>br-business@dhl.com</td>
-                </tr>
-                <tr>
-                  <td>FedEx Brasil</td>
-                  <td>55.555.555/0001-00</td>
-                  <td>enterprise@fedex.com.br</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
+
+          <div class="grid">
+            <input id="fNome" placeholder="Nome do fornecedor" />
+            <input id="fCnpj" placeholder="CNPJ" />
+            <input id="fEmail" placeholder="Email corporativo" />
+            <input id="fEndereco" placeholder="Endereço" />
+          </div>
+
+          <button class="btn" onclick="addFornecedor()">
+            <span>Adicionar Fornecedor</span>
+            <span class="btn-icon">+</span>
+          </button>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="tblFornecedores">
+              <tr>
+                <td>DHL Express</td>
+                <td>44.444.444/0001-00</td>
+                <td>br-business@dhl.com</td>
+              </tr>
+              <tr>
+                <td>FedEx Brasil</td>
+                <td>55.555.555/0001-00</td>
+                <td>enterprise@fedex.com.br</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
       <!-- FATURAMENTO PAGE -->
       <div id="faturamento" class="page">
         <div class="card">
-          <div class="card-inner">
-            <div class="card-header">
-              <div>
-                <span class="eyebrow">Financeiro</span>
-                <h2 class="card-title">Faturamento</h2>
-              </div>
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Financeiro</span>
+              <h2 class="card-title">Faturamento</h2>
             </div>
-
-            <div class="grid">
-              <select id="cliente">
-                <option value="Amazon Brasil">Amazon Brasil</option>
-                <option value="Magalu">Magalu Marketplace</option>
-                <option value="Mercado Livre">Mercado Livre</option>
-              </select>
-            </div>
-
-            <div id="linhas"></div>
-
-            <button class="btn" onclick="addLinha()">
-              <span>+ Adicionar Produto</span>
-              <span class="btn-icon">+</span>
-            </button>
-
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-              <p style="font-size: 1.1rem; color: var(--text-secondary);">
-                Total: <strong style="color: var(--accent); font-size: 1.5rem;" id="total">R$ 0,00</strong>
-              </p>
-            </div>
-
-            <table style="margin-top: 2.5rem;">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Total</th>
-                  <th>Data</th>
-                </tr>
-              </thead>
-              <tbody id="tblFaturas">
-                <tr>
-                  <td>Amazon Brasil</td>
-                  <td>R$ 1.500,00</td>
-                  <td>2025-06-02</td>
-                </tr>
-                <tr>
-                  <td>Magalu Marketplace</td>
-                  <td>R$ 2.300,50</td>
-                  <td>2025-06-01</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
+
+          <div class="grid">
+            <select id="cliente">
+              <option value="Amazon Brasil">Amazon Brasil</option>
+              <option value="Magalu">Magalu Marketplace</option>
+              <option value="Mercado Livre">Mercado Livre</option>
+            </select>
+          </div>
+
+          <div id="linhas"></div>
+
+          <button class="btn" onclick="addLinha()">
+            <span>+ Adicionar Produto</span>
+            <span class="btn-icon">+</span>
+          </button>
+
+          <div class="total-wrapper">
+            <p>
+              Total:
+              <strong id="total">R$ 0,00</strong>
+            </p>
+          </div>
+
+          <table style="margin-top: var(--sp-5);">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="tblFaturas">
+              <tr>
+                <td>Amazon Brasil</td>
+                <td>R$ 1.500,00</td>
+                <td>2025-06-02</td>
+              </tr>
+              <tr>
+                <td>Magalu Marketplace</td>
+                <td>R$ 2.300,50</td>
+                <td>2025-06-01</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
       <!-- FROTA PAGE -->
       <div id="frota" class="page">
         <div class="card">
-          <div class="card-inner">
-            <div class="card-header">
-              <div>
-                <span class="eyebrow">Transporte</span>
-                <h2 class="card-title">Gestão de Frota</h2>
-              </div>
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Transporte</span>
+              <h2 class="card-title">Gestão de Frota</h2>
             </div>
-
-            <div class="grid col-3">
-              <input id="placa" placeholder="Placa (ex: ABC-1234)" />
-              <input id="modelo" placeholder="Modelo (ex: Volvo FH)" />
-              <input id="seguro" placeholder="Dados do seguro" />
-            </div>
-
-            <button class="btn" onclick="addFrota()">
-              <span>Registrar Veículo</span>
-              <span class="btn-icon">+</span>
-            </button>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Placa</th>
-                  <th>Modelo</th>
-                  <th>Seguradora</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="tblFrota">
-                <tr>
-                  <td><strong>ABC-1234</strong></td>
-                  <td>Volvo FH</td>
-                  <td>Bradesco Seguros</td>
-                  <td><span style="color: var(--accent);">✓ Ativo</span></td>
-                </tr>
-                <tr>
-                  <td><strong>XYZ-9999</strong></td>
-                  <td>Scania R450</td>
-                  <td>Porto Seguro</td>
-                  <td><span style="color: var(--accent);">✓ Ativo</span></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
+
+          <div class="grid col-3">
+            <input id="placa" placeholder="Placa (ex: ABC-1234)" />
+            <input id="modelo" placeholder="Modelo (ex: Volvo FH)" />
+            <input id="seguro" placeholder="Dados do seguro" />
+          </div>
+
+          <button class="btn" onclick="addFrota()">
+            <span>Registrar Veículo</span>
+            <span class="btn-icon">+</span>
+          </button>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Placa</th>
+                <th>Modelo</th>
+                <th>Seguradora</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tblFrota">
+              <tr>
+                <td><strong>ABC-1234</strong></td>
+                <td>Volvo FH</td>
+                <td>Bradesco Seguros</td>
+                <td><span style="color: var(--success); font-weight: 600;">✓ Ativo</span></td>
+              </tr>
+              <tr>
+                <td><strong>XYZ-9999</strong></td>
+                <td>Scania R450</td>
+                <td>Porto Seguro</td>
+                <td><span style="color: var(--success); font-weight: 600;">✓ Ativo</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </main>
@@ -940,7 +830,7 @@
   <div class="modal" id="modalCliente">
     <div class="modal-content">
       <div class="modal-inner">
-        <h3 class="modal-title">✨ Novo Cliente</h3>
+        <h3 class="modal-title">Novo Cliente</h3>
 
         <div class="grid col-3">
           <input id="cRazao" placeholder="Razão social" />
@@ -962,8 +852,8 @@
         </div>
 
         <div class="modal-actions">
-          <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-          <button class="btn" onclick="addCliente()">
+          <button class="btn btn-secondary" type="button" onclick="closeModal()">Cancelar</button>
+          <button class="btn" type="button" onclick="addCliente()">
             <span>Salvar Cliente</span>
             <span class="btn-icon">→</span>
           </button>
@@ -975,17 +865,16 @@
   <script>
     /* ====== NAVIGATION ====== */
     function showPage(id) {
-      // Hide all pages
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
-      
-      // Show selected page
-      document.getElementById(id).classList.add('active');
-      event.target.closest('.nav').classList.add('active');
 
-      // Close mobile menu if open
+      document.getElementById(id).classList.add('active');
+      if (event && event.target) {
+        event.target.closest('.nav').classList.add('active');
+      }
+
       const toggle = document.querySelector('.menu-toggle');
-      if (toggle.classList.contains('active')) {
+      if (toggle && toggle.classList.contains('active')) {
         toggleMenu();
       }
     }
@@ -1020,7 +909,7 @@
       }
 
       const row = `
-        <tr style="animation: fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1);">
+        <tr>
           <td>${Math.floor(Math.random() * 10000)}</td>
           <td>${cRazao.value}</td>
           <td>${cCnpj.value || '—'}</td>
@@ -1028,8 +917,7 @@
         </tr>
       `;
       document.getElementById('tblClientes').innerHTML += row;
-      
-      // Clear form
+
       ['cRazao', 'cFantasia', 'cCnpj', 'cEmail', 'cTel', 'cContato', 'cRua', 'cCidade', 'cEstado', 'cPais'].forEach(id => {
         document.getElementById(id).value = '';
       });
@@ -1045,14 +933,14 @@
       }
 
       const row = `
-        <tr style="animation: fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1);">
+        <tr>
           <td>${fNome.value}</td>
           <td>${fCnpj.value || '—'}</td>
           <td>${fEmail.value || '—'}</td>
         </tr>
       `;
       document.getElementById('tblFornecedores').innerHTML += row;
-      
+
       fNome.value = '';
       fCnpj.value = '';
       fEmail.value = '';
@@ -1063,7 +951,6 @@
     function addLinha() {
       const div = document.createElement('div');
       div.className = 'grid col-4';
-      div.style.animation = 'fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1)';
       div.innerHTML = `
         <input placeholder="Produto" class="linha-produto" />
         <input placeholder="Qtd" class="linha-qtd" type="number" oninput="calcTotal()" />
@@ -1076,7 +963,7 @@
     function calcTotal() {
       let total = 0;
       const linhas = document.querySelectorAll('#linhas .grid');
-      
+
       linhas.forEach(linha => {
         const qtd = parseFloat(linha.querySelector('.linha-qtd').value) || 0;
         const valor = parseFloat(linha.querySelector('.linha-valor').value) || 0;
@@ -1086,14 +973,14 @@
         const descAbs = base * (desconto / 100);
         const liquido = base - descAbs;
 
-        // Impostos: PIS (0.65%) + COFINS (3%) + ICMS (18%)
         const impostos = liquido * (0.0065 + 0.03 + 0.18);
         const final = liquido + impostos;
 
         total += final;
       });
 
-      document.getElementById('total').textContent = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('total').textContent =
+        `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
 
     /* ====== FLEET ====== */
@@ -1104,15 +991,15 @@
       }
 
       const row = `
-        <tr style="animation: fadeInUp 300ms cubic-bezier(0.32, 0.72, 0, 1);">
+        <tr>
           <td><strong>${placa.value.toUpperCase()}</strong></td>
           <td>${modelo.value}</td>
           <td>${seguro.value || '—'}</td>
-          <td><span style="color: var(--accent);">✓ Ativo</span></td>
+          <td><span style="color: #12a88a; font-weight: 600;">✓ Ativo</span></td>
         </tr>
       `;
       document.getElementById('tblFrota').innerHTML += row;
-      
+
       placa.value = '';
       modelo.value = '';
       seguro.value = '';
