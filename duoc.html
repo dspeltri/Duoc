@@ -1,308 +1,986 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Duo C Logística · ERP Backoffice</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DUOC Logística ERP — Enterprise Excellence</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Inter + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-<style>
-:root {
-  --navy:#0a1628;
-  --navy-alt:#262836;
-  --teal:#007585;
-  --teal-hover:#006575;
-  --teal-light:#29b0c3;
-  --on-dark-60:rgba(255,255,255,0.60);
-  --on-dark-50:rgba(255,255,255,0.50);
-  --on-dark-40:rgba(255,255,255,0.40);
-  --on-dark-20:rgba(255,255,255,0.20);
-  --on-dark-10:rgba(255,255,255,0.10);
-  --on-dark-05:rgba(255,255,255,0.05);
-  --on-light-60:rgba(10,22,40,0.60);
-  --on-light-50:rgba(10,22,40,0.50);
-}
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--white);
-  color:var(--navy);
-  line-height:1.6;
-}
+    /* ── Core tokens (from style guide) ── */
+    :root {
+      --navy:         #0a1628;
+      --navy-alt:     #262836;
+      --teal:         #007585;
+      --teal-hover:   #006575;
+      --teal-light:   #29b0c3;
+      --teal-bg:      #eef6f7;
+      --teal-mid:     #e5eff0;
+      --teal-border:  #cddbde;
 
-.container{max-width:1200px;margin:auto;padding:0 24px}
+      --gray-01: #46535e;
+      --gray-02: #5d6d78;
+      --gray-03: #82939a;
+      --gray-04: #acc0c4;
+      --gray-05: #cddbde;
+      --gray-06: #e5eff0;
+      --gray-07: #eef6f7;
+      --gray-08: #f9fcfc;
 
-/* NAV */
-nav{
-  position:sticky;top:0;z-index:100;
-  background:white;
-  border-bottom:1px solid var(--on-dark-10);
-}
-.nav-inner{
-  display:flex;justify-content:space-between;align-items:center;
-  height:56px;
-}
-.brand{
-  color:var(--teal);
-  font-weight:700;
-  font-size:13px;
-  letter-spacing:0.05em;
-}
-.nav-links a{
-  color:var(--on-light-60);
-  margin-left:16px;
-  font-size:13px;
-  text-decoration:none;
-}
-.nav-links a:hover{color:var(--navy)}
+      --error:      #ea2238;
+      --error-bg:   #fcdcdc;
+      --warning:    #ffa600;
+      --warning-bg: #fff6b7;
+      --success:    #12a88a;
+      --success-bg: #c1f2e9;
+      --info:       #0055a8;
+      --info-bg:    #cceaf5;
 
-/* HERO */
-.hero{
-  padding:80px 0;
-  background:linear-gradient(135deg,#ffffff,#eef6f7);
-  position:relative;
-}
-.hero h1{
-  font-size:36px;
-  font-weight:800;
-  letter-spacing:-0.03em;
-  margin-bottom:16px;
-  color:var(--navy);
-}
-.hero p{
-  max-width:600px;
-  color:var(--on-light-60);
-}
-.hero ul{
-  margin-top:16px;
-  color:var(--on-light-60);
-}
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  margin-right:10px;
-  padding:12px 22px;
-  border-radius:12px;
-  font-weight:600;
-  cursor:pointer;
-  text-decoration:none;
-}
-.btn-primary{
-  background:var(--teal);
-  color:white;
-}
-.btn-primary:hover{background:var(--teal-hover)}
-.btn-secondary{
-  border:1px solid var(--on-light-60);
-  color:var(--navy);
-}
+      --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
 
-/* SECTION */
-section{padding:80px 0}
-h2{
-  font-size:28px;
-  font-weight:700;
-  color:var(--navy);
-}
-.rule{
-  width:48px;height:4px;background:var(--teal);
-  border-radius:2px;margin:12px 0 24px;
-}
-.sub{color:var(--on-light-60);font-size:13px}
+      --sp-1:  4px;
+      --sp-2:  8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 20px;
+      --sp-6: 24px;
+      --sp-8: 32px;
+      --sp-10: 40px;
+      --sp-12: 48px;
+      --sp-16: 64px;
+      --sp-20: 80px;
 
-/* CARDS */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:16px;
-}
-.card{
-  background:#ffffff;
-  border:1px solid #e0e0e0;
-  padding:20px;
-  border-radius:16px;
-}
-.card h3{
-  font-size:15px;
-  margin-bottom:6px;
-  color:var(--navy);
-}
-.card p, .card ul{
-  font-size:13px;
-  color:var(--on-light-60);
-}
+      --r-sm:    6px;
+      --r-md:    8px;
+      --r-lg:   12px;
+      --r-xl:   16px;
+      --r-2xl:  20px;
+      --r-pill: 999px;
+    }
 
-/* STATUS */
-.banner{
-  background:#eef6f7;
-  border:1px solid rgba(0,85,168,0.3);
-  padding:16px;
-  border-radius:12px;
-  margin-top:20px;
-  font-size:13px;
-  color:var(--navy);
-}
+    html {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
 
-/* WORKFLOW */
-.wf{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  overflow:hidden;
-  border-radius:16px;
-}
-.step{
-  padding:20px;
-  background:var(--teal);
-  color:white;
-}
-.step:nth-child(2){background:var(--teal-light);color:white}
-.step:nth-child(3){background:var(--navy-alt);color:white}
-.step h3{font-size:14px;margin-bottom:8px}
+    body {
+      background: #f4f6f8;
+      color: #1a2430;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
 
-/* TOGGLE */
-.toggle{margin-top:10px;color:var(--teal);cursor:pointer;font-size:13px;font-weight:600}
-.hidden{display:none}
+    /* ───────── HEADER / NAV ───────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: white;
+      border-bottom: 1px solid #dde3e8;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: 0 var(--sp-6);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-/* CTA */
-.cta{
-  background:#f5f5f5;
-  padding:24px;
-  border-radius:16px;
-  border:1px solid #e0e0e0;
-  color:var(--navy);
-}
+    .header-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
 
-@media(max-width:768px){
-  h1{font-size:28px}
-}
-</style>
+    .header-meta {
+      display: flex;
+      gap: var(--sp-3);
+      align-items: center;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--r-pill);
+      background: rgba(0,117,133,0.12);
+      color: var(--teal-light);
+      border: 1px solid rgba(0,117,133,0.3);
+      white-space: nowrap;
+    }
+
+    .header-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal-light);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--r-lg);
+      border: 1px solid #dde3e8;
+      background: white;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #1a2430;
+      margin: 3px 0;
+      transition: all 0.2s;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    /* ───────── LAYOUT WRAPPER ───────── */
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--sp-6) var(--sp-6) var(--sp-10);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: var(--sp-6);
+    }
+
+    /* ───────── SIDEBAR / NAVIGATION ───────── */
+    .sidebar {
+      position: sticky;
+      top: 80px;
+      align-self: flex-start;
+      background: white;
+      border-radius: var(--r-xl);
+      border: 1px solid #dde3e8;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: var(--sp-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+
+    .sidebar-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-02);
+      margin-bottom: var(--sp-2);
+    }
+
+    .nav {
+      position: relative;
+      padding: 10px 12px;
+      border-radius: var(--r-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-02);
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav:hover {
+      background: var(--gray-08);
+      border-color: var(--gray-06);
+    }
+
+    .nav.active {
+      background: var(--teal-bg);
+      border-color: var(--teal-border);
+      color: var(--teal);
+    }
+
+    /* ───────── MAIN CONTENT ───────── */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-5);
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ───────── CARDS (light) ───────── */
+    .card {
+      background: white;
+      border: 1px solid #dde3e8;
+      border-radius: var(--r-xl);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: var(--sp-6);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-4);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a2430;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 4px;
+    }
+
+    /* ───────── GRID SYSTEM ───────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-4);
+    }
+
+    .grid.col-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.col-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* ───────── FORM INPUTS (light) ───────── */
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: var(--r-md);
+      border: 1px solid #dde3e8;
+      background: white;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: #1a2430;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+    }
+
+    input::placeholder,
+    select::placeholder,
+    textarea::placeholder {
+      color: var(--gray-03);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0,117,133,0.15);
+      background: #ffffff;
+    }
+
+    /* ───────── BUTTONS (light) ───────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: var(--r-lg);
+      padding: 10px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: white;
+      box-shadow: 0 4px 16px rgba(0,117,133,0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--teal-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--teal);
+      border: 1px solid var(--teal-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--teal-bg);
+    }
+
+    .btn-icon {
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ───────── TABLES ───────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--sp-3);
+      font-size: 13px;
+    }
+
+    thead {
+      background: #edf0f3;
+    }
+
+    th {
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-02);
+      border-bottom: 1px solid #dde3e8;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e3e7eb;
+      color: var(--gray-02);
+    }
+
+    tbody tr:hover {
+      background: #f8f9fa;
+    }
+
+    /* ───────── MODAL ───────── */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(0,0,0,0.35);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: var(--r-2xl);
+      border: 1px solid #dde3e8;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 640px;
+      padding: var(--sp-6);
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #1a2430;
+      margin-bottom: var(--sp-4);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--sp-3);
+      margin-top: var(--sp-4);
+    }
+
+    /* ───────── TEXT STYLES UTIL ───────── */
+    .text-secondary {
+      font-size: 14px;
+      color: var(--gray-02);
+    }
+
+    .total-wrapper {
+      margin-top: var(--sp-5);
+      padding-top: var(--sp-4);
+      border-top: 1px solid #dde3e8;
+    }
+
+    .total-label {
+      font-size: 15px;
+      color: var(--gray-02);
+    }
+
+    .total-value {
+      color: var(--teal);
+      font-size: 22px;
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    /* ───────── RESPONSIVE ───────── */
+    @media (max-width: 1024px) {
+      .wrapper {
+        grid-template-columns: 1fr;
+        padding: var(--sp-5) var(--sp-4) var(--sp-8);
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto;
+        border-radius: var(--r-xl);
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap: var(--sp-3);
+      }
+
+      .sidebar-label {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 0 var(--sp-4);
+      }
+
+      .header-title {
+        font-size: 18px;
+      }
+
+      .header-badge {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .wrapper {
+        padding: var(--sp-4) var(--sp-3) var(--sp-8);
+      }
+
+      .sidebar {
+        margin-bottom: var(--sp-4);
+        padding: var(--sp-4);
+      }
+
+      .content {
+        gap: var(--sp-4);
+      }
+
+      .card {
+        padding: var(--sp-5);
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .grid,
+      .grid.col-3,
+      .grid.col-4 {
+        grid-template-columns: 1fr;
+        gap: var(--sp-3);
+      }
+
+      .modal-content {
+        padding: var(--sp-5);
+      }
+
+      .modal-actions {
+        flex-direction: column-reverse;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0 var(--sp-3);
+      }
+
+      .wrapper {
+        padding: var(--sp-3) var(--sp-2) var(--sp-6);
+      }
+
+      .card {
+        padding: var(--sp-4);
+      }
+
+      .card-title {
+        font-size: 16px;
+      }
+
+      .modal-content {
+        padding: var(--sp-4);
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- HEADER -->
+  <header>
+    <h1 class="header-title">DUOC Logística</h1>
+    <div class="header-meta">
+      <span class="header-badge">
+        <span class="header-badge-dot"></span>
+        Premium ERP
+      </span>
+      <button class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
 
-<nav>
-  <div class="container nav-inner">
-    <div class="brand">Duo C Logística · ERP Backoffice</div>
-    <div class="nav-links">
-      <a href="#overview">Visão geral</a>
-      <a href="#why">Por que agora</a>
-      <a href="#changes">O que muda</a>
-      <a href="#fit">Aderência</a>
-      <a href="#impl">Implementação</a>
-      <a href="#decisions">Decisões</a>
+  <!-- MAIN LAYOUT -->
+  <div class="wrapper">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <label class="sidebar-label">Módulos</label>
+      <button class="nav active" onclick="showPage('clientes')">📊 <span>Clientes</span></button>
+      <button class="nav" onclick="showPage('fornecedores')">🏭 <span>Fornecedores</span></button>
+      <button class="nav" onclick="showPage('faturamento')">💰 <span>Faturamento</span></button>
+      <button class="nav" onclick="showPage('frota')">🚚 <span>Frota</span></button>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+      <!-- CLIENTES PAGE -->
+      <div id="clientes" class="page active">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Gestão</span>
+              <h2 class="card-title">Clientes</h2>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('cliente')">
+              <span>+ Novo Cliente</span>
+              <span class="btn-icon">→</span>
+            </button>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="tblClientes">
+              <tr>
+                <td>1</td>
+                <td>Amazon Brasil</td>
+                <td>11.111.111/0001-00</td>
+                <td>contato@amazon.br</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Magalu Marketplace</td>
+                <td>22.222.222/0001-00</td>
+                <td>admin@magalu.com.br</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Mercado Livre</td>
+                <td>33.333.333/0001-00</td>
+                <td>suporte@mercadolivre.com.br</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FORNECEDORES PAGE -->
+      <div id="fornecedores" class="page">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Parceiros</span>
+              <h2 class="card-title">Fornecedores</h2>
+            </div>
+          </div>
+
+          <div class="grid">
+            <input id="fNome" placeholder="Nome do fornecedor" />
+            <input id="fCnpj" placeholder="CNPJ" />
+            <input id="fEmail" placeholder="Email corporativo" />
+            <input id="fEndereco" placeholder="Endereço" />
+          </div>
+
+          <button class="btn btn-primary" onclick="addFornecedor()">
+            <span>Adicionar Fornecedor</span>
+            <span class="btn-icon">+</span>
+          </button>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="tblFornecedores">
+              <tr>
+                <td>DHL Express</td>
+                <td>44.444.444/0001-00</td>
+                <td>br-business@dhl.com</td>
+              </tr>
+              <tr>
+                <td>FedEx Brasil</td>
+                <td>55.555.555/0001-00</td>
+                <td>enterprise@fedex.com.br</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FATURAMENTO PAGE -->
+      <div id="faturamento" class="page">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Financeiro</span>
+              <h2 class="card-title">Faturamento</h2>
+            </div>
+          </div>
+
+          <div class="grid">
+            <select id="cliente">
+              <option value="Amazon Brasil">Amazon Brasil</option>
+              <option value="Magalu">Magalu Marketplace</option>
+              <option value="Mercado Livre">Mercado Livre</option>
+            </select>
+          </div>
+
+          <div id="linhas"></div>
+
+          <button class="btn btn-primary" onclick="addLinha()">
+            <span>+ Adicionar Produto</span>
+            <span class="btn-icon">+</span>
+          </button>
+
+          <div class="total-wrapper">
+            <p class="total-label">
+              Total:
+              <span class="total-value" id="total">R$ 0,00</span>
+            </p>
+          </div>
+
+          <table style="margin-top: var(--sp-5);">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="tblFaturas">
+              <tr>
+                <td>Amazon Brasil</td>
+                <td>R$ 1.500,00</td>
+                <td>2025-06-02</td>
+              </tr>
+              <tr>
+                <td>Magalu Marketplace</td>
+                <td>R$ 2.300,50</td>
+                <td>2025-06-01</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FROTA PAGE -->
+      <div id="frota" class="page">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="eyebrow">Transporte</span>
+              <h2 class="card-title">Gestão de Frota</h2>
+            </div>
+          </div>
+
+          <div class="grid col-3">
+            <input id="placa" placeholder="Placa (ex: ABC-1234)" />
+            <input id="modelo" placeholder="Modelo (ex: Volvo FH)" />
+            <input id="seguro" placeholder="Dados do seguro" />
+          </div>
+
+          <button class="btn btn-primary" onclick="addFrota()">
+            <span>Registrar Veículo</span>
+            <span class="btn-icon">+</span>
+          </button>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Placa</th>
+                <th>Modelo</th>
+                <th>Seguradora</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tblFrota">
+              <tr>
+                <td><strong>ABC-1234</strong></td>
+                <td>Volvo FH</td>
+                <td>Bradesco Seguros</td>
+                <td><span style="color: var(--success); font-weight: 600;">✓ Ativo</span></td>
+              </tr>
+              <tr>
+                <td><strong>XYZ-9999</strong></td>
+                <td>Scania R450</td>
+                <td>Porto Seguro</td>
+                <td><span style="color: var(--success); font-weight: 600;">✓ Ativo</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: NOVO CLIENTE -->
+  <div class="modal" id="modalCliente">
+    <div class="modal-content">
+      <h3 class="modal-title">Novo Cliente</h3>
+
+      <div class="grid col-3">
+        <input id="cRazao" placeholder="Razão social" />
+        <input id="cFantasia" placeholder="Nome fantasia" />
+        <input id="cCnpj" placeholder="CNPJ" />
+      </div>
+
+      <div class="grid col-3">
+        <input id="cEmail" placeholder="Email corporativo" />
+        <input id="cTel" placeholder="Telefone" />
+        <input id="cContato" placeholder="Nome do contato" />
+      </div>
+
+      <div class="grid">
+        <input id="cRua" placeholder="Rua" />
+        <input id="cCidade" placeholder="Cidade" />
+        <input id="cEstado" placeholder="Estado" />
+        <input id="cPais" placeholder="País" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" type="button" onclick="addCliente()">
+          <span>Salvar Cliente</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
     </div>
   </div>
-</nav>
 
-<section class="hero" id="overview">
-  <div class="container">
-    <h1>ERP Backoffice para Duo C Logística</h1>
-    <p>A Duo C atua em um mercado logístico em crescimento no norte do Brasil. Para escalar operações, é necessário consolidar processos, finanças e dados em um único sistema de backoffice.</p>
+  <script>
+    /* ====== NAVIGATION ====== */
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
 
-    <a class="btn btn-primary" onclick="go('changes')">Ver impacto nas operações</a>
-    <a class="btn btn-secondary" onclick="go('impl')">Ver plano de implementação</a>
+      document.getElementById(id).classList.add('active');
+      if (event && event.target) {
+        event.target.closest('.nav').classList.add('active');
+      }
 
-    <ul>
-      <li>Uma única fonte de verdade para pedidos, rotas e faturamento</li>
-      <li>Fechamento financeiro mais rápido e menos erros manuais</li>
-      <li>Escala sustentável no norte do Brasil</li>
-    </ul>
-  </div>
-</section>
+      const toggle = document.querySelector('.menu-toggle');
+      if (toggle && toggle.classList.contains('active')) {
+        toggleMenu();
+      }
+    }
 
-<section class="container" id="why">
-  <h2>Duo C Hoje: Crescimento com Atrito Operacional</h2>
-  <div class="rule"></div>
+    function toggleMenu() {
+      document.querySelector('.menu-toggle').classList.toggle('active');
+    }
 
-  <div class="grid">
-    <div class="card">
-      <h3>Operações & Visibilidade</h3>
-      <ul>
-        <li>Múltiplas planilhas e sistemas</li>
-        <li>Dificuldade em acompanhar SLAs (Premissa)</li>
-      </ul>
-    </div>
+    /* ====== MODAL MANAGEMENT ====== */
+    function openModal(type) {
+      const modal = document.getElementById(`modal${type.charAt(0).toUpperCase() + type.slice(1)}`);
+      if (modal) {
+        modal.classList.add('active');
+      }
+    }
 
-    <div class="card">
-      <h3>Financeiro & Faturamento</h3>
-      <ul>
-        <li>Processos manuais de faturamento</li>
-        <li>Reconciliação trabalhosa</li>
-        <li>Risco de atrasos</li>
-      </ul>
-    </div>
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+    }
 
-    <div class="card">
-      <h3>Dados & Decisão</h3>
-      <ul>
-        <li>Dados fragmentados</li>
-        <li>Sem dashboards consolidados</li>
-        <li>Relatórios lentos</li>
-      </ul>
-    </div>
-  </div>
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        closeModal();
+      }
+    });
 
+    /* ====== CLIENTS ====== */
+    function addCliente() {
+      if (!cRazao.value.trim()) {
+        alert('Por favor, insira a razão social');
+        return;
+      }
 
-</section>
+      const row = `
+        <tr>
+          <td>${Math.floor(Math.random() * 10000)}</td>
+          <td>${cRazao.value}</td>
+          <td>${cCnpj.value || '—'}</td>
+          <td>${cEmail.value || '—'}</td>
+        </tr>
+      `;
+      document.getElementById('tblClientes').innerHTML += row;
 
-<section class="container" id="changes">
-  <h2>O que o ERP muda para a Duo C</h2>
-  <div class="rule"></div>
+      ['cRazao', 'cFantasia', 'cCnpj', 'cEmail', 'cTel', 'cContato', 'cRua', 'cCidade', 'cEstado', 'cPais'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
 
- 
-    <div class="card">
-      <h3>Dados & Compliance</h3>
-      <p>Dados centralizados e auditáveis</p>
-    </div>
-  </div>
+      closeModal();
+    }
 
-  <ul class="sub">
-    <li>Melhor visibilidade de margem </li>
-    <li>Fechamento financeiro mais rápido </li>
-    <li>Redução de erros operacionais e financeiros</li>
-  </ul>
-</section>
+    /* ====== SUPPLIERS ====== */
+    function addFornecedor() {
+      if (!fNome.value.trim()) {
+        alert('Por favor, insira o nome do fornecedor');
+        return;
+      }
 
-<section class="container" id="fit">
-  <h2>Como o ERP se adapta ao modelo da Duo C</h2>
-  <div class="rule"></div>
+      const row = `
+        <tr>
+          <td>${fNome.value}</td>
+          <td>${fCnpj.value || '—'}</td>
+          <td>${fEmail.value || '—'}</td>
+        </tr>
+      `;
+      document.getElementById('tblFornecedores').innerHTML += row;
 
-  <div class="grid">
-    <div class="card"><h3>Clientes & Contratos</h3><p>Gestão centralizada de contratos</p></div>
-    <div class="card"><h3>Faturamento</h3><p>Faturamento automatizado</p></div>
-    <div class="card"><h3>Relatórios</h3><p>Dashboards operacionais e financeiros</p></div>
-  </div>
+      fNome.value = '';
+      fCnpj.value = '';
+      fEmail.value = '';
+      fEndereco.value = '';
+    }
 
-  <div class="toggle" onclick="toggle('fitmore')">Ver mais detalhes</div>
-  <div id="fitmore" class="hidden sub">
-    <p>Suporte a rotas longas e desafios logísticos do norte do Brasil.</p>
-  </div>
-</section>
+    /* ====== BILLING LINES ====== */
+    function addLinha() {
+      const div = document.createElement('div');
+      div.className = 'grid col-4';
+      div.innerHTML = `
+        <input placeholder="Produto" class="linha-produto" />
+        <input placeholder="Qtd" class="linha-qtd" type="number" oninput="calcTotal()" />
+        <input placeholder="Valor Unit." class="linha-valor" type="number" oninput="calcTotal()" />
+        <input placeholder="Desconto %" class="linha-desconto" type="number" oninput="calcTotal()" />
+      `;
+      document.getElementById('linhas').appendChild(div);
+    }
 
-<section class="container" id="impl">
-  <h2>Implementação: Faseada e de Baixo Risco</h2>
-  <div class="rule"></div>
+    function calcTotal() {
+      let total = 0;
+      const linhas = document.querySelectorAll('#linhas .grid');
 
-  <div class="wf">
-    <div class="step"><h3>1. Diagnóstico</h3><p>Mapeamento de processos (TBC)</p></div>
-    <div class="step"><h3>2. Piloto</h3><p>Teste com diferentes senarios selecionados</p></div>
-    <div class="step"><h3>3. Escala</h3><p>Expansão para toda operação</p></div>
-  </div>
+      linhas.forEach(linha => {
+        const qtd = parseFloat(linha.querySelector('.linha-qtd').value) || 0;
+        const valor = parseFloat(linha.querySelector('.linha-valor').value) || 0;
+        const desconto = parseFloat(linha.querySelector('.linha-desconto').value) || 0;
 
+        const base = qtd * valor;
+        const descAbs = base * (desconto / 100);
+        const liquido = base - descAbs;
 
-</section>
+        const impostos = liquido * (0.0065 + 0.03 + 0.18);
+        const final = liquido + impostos;
 
+        total += final;
+      });
 
-<script>
-function go(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
-function toggle(id){
-  document.getElementById(id).classList.toggle('hidden');
-}
-</script>
+      document.getElementById('total').textContent =
+        `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
 
+    /* ====== FLEET ====== */
+    function addFrota() {
+      if (!placa.value.trim()) {
+        alert('Por favor, insira a placa');
+        return;
+      }
+
+      const row = `
+        <tr>
+          <td><strong>${placa.value.toUpperCase()}</strong></td>
+          <td>${modelo.value}</td>
+          <td>${seguro.value || '—'}</td>
+          <td><span style="color: #12a88a; font-weight: 600;">✓ Ativo</span></td>
+        </tr>
+      `;
+      document.getElementById('tblFrota').innerHTML += row;
+
+      placa.value = '';
+      modelo.value = '';
+      seguro.value = '';
+    }
+  </script>
 </body>
 </html>
